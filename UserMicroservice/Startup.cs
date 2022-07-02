@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserMicroservice.Models;
+using UserMicroservice.Repository;
+using UserMicroservice.Services;
 
 namespace UserMicroservice
 {
@@ -33,7 +36,10 @@ namespace UserMicroservice
         {
 
             services.AddControllers();
-            services.AddDbContext<Database>();
+            services.AddDbContext<Database>(options =>
+            {
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
             services.AddLogging();
             services.AddSwaggerGen(c =>
             {
@@ -84,6 +90,10 @@ namespace UserMicroservice
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
                     };
                 });
+
+            services.AddHttpClient<AuthorizationService_Api>(c => c.BaseAddress = new Uri(Configuration["ConnectedServices:Authorization"]));
+            services.AddScoped<IAuthorizationService_Api, AuthorizationService_Api>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
         }
 

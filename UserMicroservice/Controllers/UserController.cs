@@ -16,9 +16,11 @@ using Microsoft.Extensions.Logging;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using UserMicroservice.Repository;
+using UserMicroservice.Exceptions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
+#nullable enable
 namespace UserMicroservice.Controllers
 {
 
@@ -28,12 +30,14 @@ namespace UserMicroservice.Controllers
     {
         private readonly Database _db;
         private readonly ILogger<UserController> _logger;
+        private readonly IUserRepository _userRepository;
 
 
-        public UserController(ILogger<UserController> logger, Database db)
+        public UserController(ILogger<UserController> logger, Database db, IUserRepository userRepository)
         {
             this._db = db;
             this._logger = logger;
+            this._userRepository = userRepository;
         }
 
         // GET: /user
@@ -42,17 +46,11 @@ namespace UserMicroservice.Controllers
         [HttpGet, Authorize]
         public async Task<ActionResult<Response<List<AppUser>>>> Get()
         {
-            #nullable enable
-            List<AppUser>? users = await _db.AppUsers.ToListAsync();
-
-            if(users == null)
-            {
-                _logger.LogError("No Users Exist");
-                return NotFound(new Response("Users not found", false));
-            }
-
-            _logger.LogInformation("Sending Users List");
-            return Ok(new Response("Users Found", true, users));
+            return Ok(new Response(
+                "Users Found", 
+                true, 
+                await _userRepository.GetAllUsers()
+                ));
         }
 
         // GET /user/5
@@ -61,12 +59,9 @@ namespace UserMicroservice.Controllers
         [HttpGet("{id}"), Authorize]
         public async Task<ActionResult<Response<AppUser>>> Get(int id)
         {
-            AppUser user = await _db.AppUsers.FindAsync(id);
+            AppUser user = await _userRepository.GetAppUser(id);
 
-            if(user == null)
-            {
-                return NotFound(new Response("User not found", false));
-            }
+            if(user == null) return NotFound(new Response("User not found", false));
 
             return Ok(new Response("User found", true, user));
         }
@@ -77,18 +72,8 @@ namespace UserMicroservice.Controllers
         [HttpPost]
         public async Task<ActionResult<Response<AppUser>>> Post([FromBody] AppUser user)
         {
-            await _db.AppUsers.AddAsync(user);
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-
-                return StatusCode(501, new Response("Database Error", false));
-            }
-
-            return CreatedAtAction(nameof(Get), new { id = user.Id }, new Response<AppUser>("User Added", true, user));
+            AppUser insertedUser = await _userRepository.InsertUser(user);
+            return CreatedAtAction(nameof(Get), new { id = user.Id }, new Response<AppUser>("User Added", true, insertedUser));
         }
 
         // PUT /user/5
@@ -98,28 +83,13 @@ namespace UserMicroservice.Controllers
         [HttpPut("{id}"), Authorize()]
         public async Task<ActionResult<Response<AppUser>>> Put(int id, [FromBody] AppUser user)
         {
-            if(user.Id != id)
-            {
-                return BadRequest(new Response("Ids Dont match", false));
-            }
+            if(user.Id != id) return BadRequest(new Response("Ids Dont match", false));
 
-            _db.Entry(user).State = EntityState.Modified;
+            AppUser updatedUser = await _userRepository.UpdateUser(user);
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if((await _db.AppUsers.FindAsync(id)) == null)
-                {
-                    return NotFound(new Response("User Not Found", false));
-                }
+            if (updatedUser == null) return NotFound(new Response("User Not Found", false));
 
-                throw;
-            }
-
-            return Accepted(new Response<AppUser>("User Data Updated", true, user));
+            return Accepted(new Response<AppUser>("User Data Updated", true, updatedUser));
         }
 
         // DELETE /user/5
@@ -128,25 +98,11 @@ namespace UserMicroservice.Controllers
         [HttpDelete("{id}"), Authorize]
         public async Task<ActionResult<Response>> Delete(int id)
         {
-            var user = await _db.AppUsers.FindAsync(id);
-            if(user == null)
-            {
-                return NotFound(new Response("User Doesnot Exists", false));
-            }
+            bool deleted = await _userRepository.DeleteUser(id);
 
-            _db.Entry(user).State = EntityState.Deleted;
-            _db.AppUsers.Remove(user);
+            if (!deleted) return NotFound(new Response("User not found", false));
 
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
-
-            return Ok(new Response("User Deleted", true, user));
+            return Ok(new Response("User Deleted", true));
         }
 
         // POST /user/login
@@ -156,34 +112,24 @@ namespace UserMicroservice.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<Response<AuthTokenPayload?>>> Login(LoginRequest login)
         {
-            AppUser user = await _db.AppUsers.Where(u => u.Email == login.Email && u.Password == login.Password).FirstOrDefaultAsync();
-
-            if(user == default)
+            AuthTokenPayload token;
+            try
             {
-                return Unauthorized(new Response("Wrong email or password!", false));
+                token = await _userRepository.LoginUser(login);
             }
-
-            HttpClient _httpClient = new HttpClient();
-
-            // Preparing User Data to be passed through the API
-            var myContent = JsonSerializer.SerializeToUtf8Bytes(user);
-            ByteArrayContent content = new ByteArrayContent(myContent);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            // Preparation Complete. Sending object "Content"
-
-            HttpResponseMessage response = await _httpClient.PostAsync("https://localhost:44771/api/auth/login", content);
-
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
-
-            var responseReader = await response.Content.ReadAsStreamAsync();
-            AuthTokenPayload? authTokenPayload = await JsonSerializer.DeserializeAsync<AuthTokenPayload>(responseReader);
-
-            if(authTokenPayload == null)
+            catch (UserNotFoundException e)
             {
-                return StatusCode(502, new Response("Error Creating Auth Token", false));
+                return NotFound(new Response(e.Message, false));
             }
-
-            return Ok(new Response<AuthTokenPayload>("Logged in Successfully", true, authTokenPayload));
+            catch(ConnectedServiceException e)
+            {
+                return StatusCode(502, new Response(e.Message, false));
+            }
+            catch
+            {
+                throw;
+            }
+            return Ok(new Response<AuthTokenPayload>("Logged in Successfully", true, token));
         }
     }
 }
