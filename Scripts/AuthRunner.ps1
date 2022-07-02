@@ -1,0 +1,1 @@
+dotnet run --project .\AuthorizationMicroservice --urls "https://localhost:44771"

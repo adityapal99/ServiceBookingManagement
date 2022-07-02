@@ -1,0 +1,1 @@
+dotnet run --project .\ProductMicroservice --urls "https://localhost:44772"

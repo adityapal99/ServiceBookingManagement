@@ -1,0 +1,66 @@
+version: '3.4'
+
+services:
+  usermicroservice:
+    image: ${DOCKER_REGISTRY-}usermicroservice
+    build:
+      context: .
+      dockerfile: UserMicroservice/Dockerfile
+
+    ports:
+      - "49151:443" 
+      - "49152:80"
+    expose:
+      - 49151
+      - 49152
+
+  authorizationmicroservice:
+    image: ${DOCKER_REGISTRY-}authorizationmicroservice
+    build:
+      context: .
+      dockerfile: AuthorizationMicroservice/Dockerfile
+    ports:
+      - "49153:443"
+      - "49154:80"
+    expose:
+      - 49153
+      - 49154
+
+  productmicroservice:
+    image: ${DOCKER_REGISTRY-}productmicroservice
+    build:
+      context: .
+      dockerfile: ProductMicroservice/Dockerfile
+    ports:
+      - "49155:443"
+      - "49156:80"
+    expose:
+      - 49155
+      - 49156
+
+  servicebookingmicroservice:
+    image: ${DOCKER_REGISTRY-}servicebookingmicroservice
+    build:
+      context: .
+      dockerfile: ServiceBookingMicroservice/Dockerfile
+    ports:
+      - "49157:443"
+      - "49158:80"
+
+    expose:
+      - 49157
+      - 49158
+
+  sqlserverService:  
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    hostname: 'sqlserver'  
+    environment:  
+      ACCEPT_EULA: Y  
+      SA_PASSWORD: "SuperuserPassword@1234"  
+    volumes:  
+      - ./data/mssql:/var/opt/mssql3  
+    ports:  
+      - '1433:1433'  
+    expose:  
+      - 1433  
+

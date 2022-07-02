@@ -1,0 +1,29 @@
+﻿using AuthorizationMicroservice.Models;
+using AuthorizationMicroservice.Services;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AuthorizationMicroservice.Controllers
+{
+    [ApiController]
+    [Route("api/auth")]
+    public class AuthenticationController : ControllerBase
+    {
+        public readonly IAuthenticationService _authService;
+
+        public AuthenticationController(IAuthenticationService _auth)
+        {
+            _authService = _auth;
+        }
+
+
+        [HttpPost("login")]
+        public ActionResult<AuthTokenPayload> Login([FromBody] AppUser user)
+        {
+            return Ok(_authService.GetAuthToken(user));
+        }
+    }
+}
