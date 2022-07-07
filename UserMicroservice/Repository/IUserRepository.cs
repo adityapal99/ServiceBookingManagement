@@ -12,7 +12,7 @@ namespace UserMicroservice.Repository
         public Task<List<AppUser>> GetAllUsers();
         public Task<AppUser> InsertUser(AppUser user);
         public Task<AppUser> UpdateUser(AppUser user);
-        public Task<bool> DeleteUser(int id);
+        public Task DeleteUser(int id);
         public Task<AuthTokenPayload> LoginUser(LoginRequest request);
     }
 }

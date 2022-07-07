@@ -31,7 +31,7 @@ namespace ProductMicroservice.Models
                 .ToTable("AppUser");
         }
 
-#nullable enable
+        #nullable enable
         public DbSet<AppProduct> AppProducts { get; set; }
     }
 }

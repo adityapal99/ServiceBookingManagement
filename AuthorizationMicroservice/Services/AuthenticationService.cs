@@ -25,18 +25,21 @@ namespace AuthorizationMicroservice.Services
         {
             return new AuthTokenPayload
             {
-                AccessToken = this.GenerateJwtToken(user.Id)
+                AccessToken = this.GenerateJwtToken(user)
             };
 
         }
 
-        private string GenerateJwtToken(int id)
+        private string GenerateJwtToken(AppUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["Jwt:key"]);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", id.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { 
+                    new Claim(ClaimTypes.Name, user.Id.ToString()) , 
+                    new Claim(ClaimTypes.Role, ((int) user.Role).ToString()) 
+                }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 Issuer = _configuration["Jwt:Issuer"],
                 Audience = _configuration["Jwt:Audience"],

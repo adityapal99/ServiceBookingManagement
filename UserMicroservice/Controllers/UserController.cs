@@ -28,14 +28,12 @@ namespace UserMicroservice.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly Database _db;
         private readonly ILogger<UserController> _logger;
         private readonly IUserRepository _userRepository;
 
 
-        public UserController(ILogger<UserController> logger, Database db, IUserRepository userRepository)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepository)
         {
-            this._db = db;
             this._logger = logger;
             this._userRepository = userRepository;
         }
@@ -46,7 +44,8 @@ namespace UserMicroservice.Controllers
         [HttpGet, Authorize]
         public async Task<ActionResult<Response<List<AppUser>>>> Get()
         {
-            return Ok(new Response(
+            _logger.LogInformation("Getting list of all users");
+            return Ok(new Response<List<AppUser>>(
                 "Users Found", 
                 true, 
                 await _userRepository.GetAllUsers()
@@ -59,11 +58,16 @@ namespace UserMicroservice.Controllers
         [HttpGet("{id}"), Authorize]
         public async Task<ActionResult<Response<AppUser>>> Get(int id)
         {
+            _logger.LogInformation("Getting list of a particular user");
             AppUser user = await _userRepository.GetAppUser(id);
 
-            if(user == null) return NotFound(new Response("User not found", false));
+            if (user == null) 
+            {
+                _logger.LogInformation("User with id {0} not found", id);
+                return NotFound(new Response("User not found", false));
+            }
 
-            return Ok(new Response("User found", true, user));
+            return Ok(new Response<AppUser>("User found", true, user));
         }
 
         // POST /user/
@@ -73,6 +77,7 @@ namespace UserMicroservice.Controllers
         public async Task<ActionResult<Response<AppUser>>> Post([FromBody] AppUser user)
         {
             AppUser insertedUser = await _userRepository.InsertUser(user);
+            _logger.LogInformation("Added a new user");
             return CreatedAtAction(nameof(Get), new { id = user.Id }, new Response<AppUser>("User Added", true, insertedUser));
         }
 
@@ -83,10 +88,13 @@ namespace UserMicroservice.Controllers
         [HttpPut("{id}"), Authorize()]
         public async Task<ActionResult<Response<AppUser>>> Put(int id, [FromBody] AppUser user)
         {
-            if(user.Id != id) return BadRequest(new Response("Ids Dont match", false));
+            _logger.LogInformation("Ids dont match with eachother");
+            if (user.Id != id) return BadRequest(new Response("Ids Dont match", false));
 
+            _logger.LogInformation("Updating information of user with id {}", id);
             AppUser updatedUser = await _userRepository.UpdateUser(user);
 
+            _logger.LogInformation("User with id {} is not found", id);
             if (updatedUser == null) return NotFound(new Response("User Not Found", false));
 
             return Accepted(new Response<AppUser>("User Data Updated", true, updatedUser));
@@ -98,9 +106,8 @@ namespace UserMicroservice.Controllers
         [HttpDelete("{id}"), Authorize]
         public async Task<ActionResult<Response>> Delete(int id)
         {
-            bool deleted = await _userRepository.DeleteUser(id);
-
-            if (!deleted) return NotFound(new Response("User not found", false));
+            _logger.LogInformation("Deleting user with id {}", id);
+            await _userRepository.DeleteUser(id);
 
             return Ok(new Response("User Deleted", true));
         }
@@ -112,23 +119,8 @@ namespace UserMicroservice.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<Response<AuthTokenPayload?>>> Login(LoginRequest login)
         {
-            AuthTokenPayload token;
-            try
-            {
-                token = await _userRepository.LoginUser(login);
-            }
-            catch (UserNotFoundException e)
-            {
-                return NotFound(new Response(e.Message, false));
-            }
-            catch(ConnectedServiceException e)
-            {
-                return StatusCode(502, new Response(e.Message, false));
-            }
-            catch
-            {
-                throw;
-            }
+            _logger.LogInformation("logging in user");
+            AuthTokenPayload token = await _userRepository.LoginUser(login);
             return Ok(new Response<AuthTokenPayload>("Logged in Successfully", true, token));
         }
     }

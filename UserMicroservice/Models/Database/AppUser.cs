@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using UserMicroservice.Models.Enums;
 
 namespace UserMicroservice.Models
 {
@@ -28,7 +29,7 @@ namespace UserMicroservice.Models
         public string Password { get; set; }
         public string Mobile { get; set; }
         public DateTime RegistrationDate { get; set; }
-
+        public UserRole Role { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,26 +18,25 @@ namespace UserMicroservice.Repository
         private readonly Database _db;
         private readonly IAuthorizationService_Api _authApi;
 
-
         public UserRepository(Database db, IAuthorizationService_Api authApi)
         {
+            Console.WriteLine("Instantiated!!!!");
             _db = db;
             _authApi = authApi;
         }
 
-        public async Task<bool> DeleteUser(int id)
+        public async Task DeleteUser(int id)
         {
             var user = await _db.AppUsers.FindAsync(id);
             if (user == null)
             {
-                return false;
+                throw new UserNotFoundException();
             }
 
             _db.Entry(user).State = EntityState.Deleted;
             _db.AppUsers.Remove(user);
 
             await _db.SaveChangesAsync();
-            return true;
         }
 
         public async Task<List<AppUser>> GetAllUsers()
@@ -51,6 +51,9 @@ namespace UserMicroservice.Repository
 
         public async Task<AppUser> InsertUser(AppUser user)
         {
+            var hasher = new PasswordHasher<AppUser>();
+            user.Password = hasher.HashPassword(user, user.Password);
+
             await _db.AppUsers.AddAsync(user);
             try
             {
@@ -65,11 +68,20 @@ namespace UserMicroservice.Repository
 
         public async Task<AuthTokenPayload> LoginUser(LoginRequest request)
         {
-            AppUser user = await _db.AppUsers.Where(u => u.Email == request.Email && u.Password == request.Password).FirstOrDefaultAsync();
+            AppUser user = await _db.AppUsers.Where(u => u.Email == request.Email).FirstOrDefaultAsync();
 
             if (user == default)
             {
                 throw new UserNotFoundException();
+            }
+
+            var hasher = new PasswordHasher<AppUser>();
+
+            var verify = hasher.VerifyHashedPassword(user, user.Password, request.Password);
+
+            if(verify == PasswordVerificationResult.Failed)
+            {
+                throw new UserNotFoundException(message: "Password doesnot match");
             }
 
             return await _authApi.GetAuthTokenAsync(user);
@@ -92,5 +104,7 @@ namespace UserMicroservice.Repository
 
             return user;
         }
+
+
     }
 }

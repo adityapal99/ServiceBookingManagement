@@ -25,7 +25,12 @@ namespace UserMicroservice.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AppUser>().ToTable("AppUser");
+            modelBuilder.Entity<AppUser>().ToTable("User");
+
+            modelBuilder.Entity<AppUser>().Property(u => u.Email).IsRequired();
+            modelBuilder.Entity<AppUser>().HasIndex(u => u.Email).IsUnique();
+
+            modelBuilder.Entity<AppUser>().Property(u => u.Role).HasConversion<int>();
         }
 
         #nullable enable

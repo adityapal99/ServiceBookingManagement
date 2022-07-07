@@ -34,7 +34,6 @@ namespace UserMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddDbContext<Database>(options =>
             {
@@ -74,9 +73,9 @@ namespace UserMicroservice
             });
             /*services.AddIdentity<AppUser, IdentityRole>().AddDefaultTokenProviders();*/
             services.AddAuthentication(opt => {
-                    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
@@ -91,10 +90,9 @@ namespace UserMicroservice
                     };
                 });
 
-            services.AddHttpClient<AuthorizationService_Api>(c => c.BaseAddress = new Uri(Configuration["ConnectedServices:Authorization"]));
-            services.AddScoped<IAuthorizationService_Api, AuthorizationService_Api>();
+            services.AddHttpClient<IAuthorizationService_Api, AuthorizationService_Api>();
+            // services.AddScoped<IAuthorizationService_Api, AuthorizationService_Api>();
             services.AddScoped<IUserRepository, UserRepository>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,7 +109,8 @@ namespace UserMicroservice
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); // TO Use the [Authorize] Annotation
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
