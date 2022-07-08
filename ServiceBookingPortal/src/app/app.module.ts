@@ -12,6 +12,7 @@ import { AuthInterceptor } from './authentication.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './home/home.component';
+import { ProductModule } from './product/product.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    AuthenticationModule
+    AuthenticationModule,
+    ProductModule
   ],
   providers: [
     AuthService,
