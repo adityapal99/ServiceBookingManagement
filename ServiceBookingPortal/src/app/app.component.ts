@@ -12,13 +12,12 @@ export class AppComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  isAdmin: boolean = false;
-
   ngOnInit() {
-    console.log(this.authService.isLoggedIn())
-    this.isAdmin = this.authService.isAdmin();
   }
 
+  isAdminUser() {
+    return this.authService.isAdmin();
+  }
 
   isLoggedIn() {
     return this.authService.isLoggedIn();
@@ -26,6 +25,10 @@ export class AppComponent {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(["/auth/login"]);
+  }
+
+  login() {
     this.router.navigate(["/auth/login"]);
   }
 }
