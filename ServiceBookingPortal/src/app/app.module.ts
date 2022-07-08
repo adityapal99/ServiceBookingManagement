@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './home/home.component';
 import { ProductModule } from './product/product.module';
+import { BookingModule } from './booking/booking.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProductModule } from './product/product.module';
     ToastrModule.forRoot(),
 
     AuthenticationModule,
-    ProductModule
+    ProductModule,
+    BookingModule
   ],
   providers: [
     AuthService,
