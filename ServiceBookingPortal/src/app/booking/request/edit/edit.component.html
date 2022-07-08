@@ -1,1 +1,107 @@
-<p>edit works!</p>
+<div class="container">
+  
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="modal-header">						
+            <h4 class="modal-title">Edit Request</h4>
+        </div>
+        <div class="modal-body">
+
+        <div class="form-group">
+            <input 
+                formControlName="id"
+                id="id" 
+                type="number" 
+                [(ngModel)]="request.id"
+                class="form-control" style="display:none">
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="productid">ProductId:</label>
+            <input 
+                formControlName="productid"
+                id="productid" 
+                type="number" 
+                [(ngModel)]="request.productid"
+                class="form-control">
+            <div *ngIf="f.productid.touched && f.productid.invalid" class="alert alert-danger">
+                <div *ngIf="f.productid.errors?.required">Productid is required.</div>
+            </div>
+        </div>
+         
+        <div class="form-group">
+            <label for="userid">UserId</label>
+            <input 
+                formControlName="userid"
+                id="userid" 
+                type="number" 
+                [(ngModel)]="request.userid"
+                class="form-control">
+            <div *ngIf="f.userid && f.userid.invalid" class="alert alert-danger">
+                <div *ngIf="f.userid.errors?.required">Userid is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="problem">Problem</label>
+            <input 
+                formControlName="problem"
+                id="problem" 
+                type="text" 
+                [(ngModel)]="request.problem"
+                class="form-control">
+            <div *ngIf="f.problem.touched && f.problem.invalid" class="alert alert-danger">
+                <div *ngIf="f.problem.errors?.required">Problem is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input 
+                formControlName="description"
+                id="description" 
+                type="text" 
+                [(ngModel)]="request.description"
+                class="form-control">
+            <div *ngIf="f.description.touched && f.description.invalid" class="alert alert-danger">
+                <div *ngIf="f.description.errors?.required">Description is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input 
+                formControlName="status"
+                id="status" 
+                type="text" 
+                [(ngModel)]="request.status"
+                class="form-control">
+            <div *ngIf="f.status.touched && f.status.invalid" class="alert alert-danger">
+                <div *ngIf="f.status.errors?.required">Status is required.</div>
+            </div>
+        </div>
+
+            <div class="form-group">
+            <label for="requestDate">RequestDate</label>
+            <input 
+                formControlName="requestDate"
+                id="requestDate" 
+                type="date" 
+                [(ngModel)]="request.requestDate"
+                class="form-control">
+            <div *ngIf="f.requestDate.touched && f.requestDate.invalid" class="alert alert-danger">
+                <div *ngIf="f.requestDate.errors?.required">RequestDate is required.</div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <a href="#" routerLink="/request/index" class="btn btn-primary">Back</a>
+        <input type="submit" class="btn btn-success" [disabled]="!form.valid" value="Update">
+        </div>
+    </form>
+</div>
+</div>
+</div>
