@@ -23,7 +23,6 @@ import { HomeComponent } from './home/home.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-
     AuthenticationModule
   ],
   providers: [
