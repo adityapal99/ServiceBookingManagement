@@ -35,7 +35,7 @@ export class AuthService {
       console.log(authResult)
       console.log(jwtData)
 
-      const expiresAt = moment().add(jwtData.exp - moment.now(), 'millisecond');
+      const expiresAt = moment(jwtData.exp);
 
       localStorage.setItem('access_token', authResult.payload.accessToken);
       localStorage.setItem('id', jwtData.unique_name);
@@ -72,7 +72,7 @@ export class AuthService {
 
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration ?? "");
+    const expiresAt = expiration ? JSON.parse(expiration) : 0;
     return moment(expiresAt);
   }
 

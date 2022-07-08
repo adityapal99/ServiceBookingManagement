@@ -12,12 +12,13 @@ export class AppComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit() { }
+  isAdmin: boolean = false;
 
-  isAdmin() {
-    console.log(this.authService.isAdmin() + " is admin");
-    return this.authService.isAdmin();
+  ngOnInit() {
+    console.log(this.authService.isLoggedIn())
+    this.isAdmin = this.authService.isAdmin();
   }
+
 
   isLoggedIn() {
     return this.authService.isLoggedIn();

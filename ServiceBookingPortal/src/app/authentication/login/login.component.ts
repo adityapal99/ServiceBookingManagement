@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthorizationRequest } from '../auth.model';
 import { AuthService } from '../auth.service';
 
@@ -15,7 +16,7 @@ interface LoginRequestForm {
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   public loginRequestForm: FormGroup<LoginRequestForm> = new FormGroup<LoginRequestForm>({
     email: new FormControl<string>(''),
@@ -33,5 +34,6 @@ export class LoginComponent implements OnInit {
       password: this.loginRequestForm.value.password ?? ""
     }
     this.authService.login(request);
+    this.router.navigate(["/"]);
   }
 }
