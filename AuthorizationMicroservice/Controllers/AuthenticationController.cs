@@ -14,11 +14,10 @@ namespace AuthorizationMicroservice.Controllers
     public class AuthenticationController : ControllerBase
     {
         public readonly IAuthenticationService _authService;
-        public readonly ILogger _logger;
+        /*public readonly ILogger _logger;*/
 
-        public AuthenticationController(IAuthenticationService _auth, ILogger logger)
+        public AuthenticationController(IAuthenticationService _auth)
         {
-            _logger = logger;
             _authService = _auth;
         }
 

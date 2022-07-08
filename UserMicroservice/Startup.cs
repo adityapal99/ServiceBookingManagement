@@ -35,10 +35,6 @@ namespace UserMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<Database>(options =>
-            {
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            });
             services.AddLogging();
             services.AddSwaggerGen(c =>
             {
@@ -75,21 +71,29 @@ namespace UserMicroservice
             services.AddAuthentication(opt => {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                .AddJwtBearer(options =>
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
+                };
+            });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AngularPolicy", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
+            services.AddDbContext<Database>(options =>
+            {
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
             services.AddHttpClient<IAuthorizationService_Api, AuthorizationService_Api>();
             // services.AddScoped<IAuthorizationService_Api, AuthorizationService_Api>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -108,6 +112,8 @@ namespace UserMicroservice
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AngularPolicy");
 
             app.UseAuthentication(); // TO Use the [Authorize] Annotation
 
