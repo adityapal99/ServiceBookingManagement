@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BookingService } from '../../booking.service';
+import { ResponseObj, UserRequest } from '../../user-request';
 
 @Component({
   selector: 'app-details',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsComponent implements OnInit {
 
-  constructor() { }
+  id:number;
+  request:UserRequest;
+
+  constructor(public bookingService: BookingService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params["requestId"];
+    this.bookingService.getRquestById(this.id).subscribe(
+      (data:ResponseObj) => {
+        this.request = data.payload;
+      }
+    )
   }
 
 }

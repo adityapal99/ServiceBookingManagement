@@ -33,6 +33,14 @@ export class BookingService {
     )
   }
 
+  getRquestById(id:number):Observable<any>
+  {
+    return this.httpClient.get(this.apiUrl+"/"+id)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
 
   errorHandler(error:any) {
     let errorMessage = '';
