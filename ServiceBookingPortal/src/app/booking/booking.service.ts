@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
-import { ResponseObj } from './user-request';
+import { Sample } from './user-request';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,14 @@ export class BookingService {
   getRquestById(id:number):Observable<any>
   {
     return this.httpClient.get(this.apiUrl+"/"+id)
+    .pipe(
+      catchError(this.errorHandler)
+    )
+  }
+
+  addRequest(request:Sample):Observable<any>
+  {
+    return this.httpClient.post(this.apiUrl,JSON.stringify(request),this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )

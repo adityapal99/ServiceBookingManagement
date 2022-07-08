@@ -7,6 +7,7 @@ import { CreateComponent } from './request/create/create.component';
 import { DetailsComponent } from './request/details/details.component';
 import { EditComponent } from './request/edit/edit.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     BookingRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class BookingModule { }
