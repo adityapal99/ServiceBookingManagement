@@ -9,7 +9,25 @@
     </div>
 
     <!-- Register Form -->
-    <form [formGroup]="RegisterRequestForm" (ngSubmit)="onRegisterSubmit()">
+    <form #userform="ngForm" (ngSubmit)="addUser(userform.value)">
+      <input type="text" id="name" class="fadeIn second" ngmodel name="name" placeholder="Full Name">
+      <input type="email" id="email" class="fadeIn third" ngmodel name="email" placeholder="Email">
+
+      <input type="password" id="password" class="fadeIn fourth" ngmodel name="password" placeholder="Password">
+      <input type="tel" id="mobileno" class="fadeIn fifth" ngmodel name="mobileno" placeholder="Phone Number">
+      <input type="date" id="regdate" class="fadeIn sixth" ngmodel name="regdate" placeholder="Date">
+      <input type="submit" class="fadeIn seventh" value="Register">
+    </form>
+
+
+
+
+
+
+
+
+
+    <!-- <form [formGroup]="RegisterRequestForm" (ngSubmit)="onRegisterSubmit()">
       <input type="text" id="name" class="fadeIn second" formControlName="name" placeholder="Full Name">
       <input type="email" id="email" class="fadeIn third" formControlName="email" placeholder="Email">
 
@@ -18,7 +36,5 @@
       <input type="date" id="regdate" class="fadeIn sixth" formControlName="regdate" placeholder="Date">
       <input type="submit" class="fadeIn seventh" value="Register">
     </form>
-  </div>
+  --> </div>
 </div>
-
-
