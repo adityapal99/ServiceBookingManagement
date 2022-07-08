@@ -25,7 +25,6 @@ import { BookingModule } from './booking/booking.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-
     AuthenticationModule,
     ProductModule,
     BookingModule

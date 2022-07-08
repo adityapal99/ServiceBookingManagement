@@ -6,11 +6,13 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { AuthInterceptor } from '../authentication.interceptor';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
