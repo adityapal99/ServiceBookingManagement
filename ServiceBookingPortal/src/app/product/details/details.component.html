@@ -1,0 +1,45 @@
+<div class="container">
+
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Product Details</h4>
+            </div>
+            <div class="container">
+            <div>
+                <strong>ID:</strong>
+                <p>{{ product.id }}</p>
+            </div>
+
+            <div>
+                <strong>Name:</strong>
+                <p>{{ product.name }}</p>
+            </div>
+
+            <div>
+                <strong>Make:</strong>
+                <p>{{ product.make }}</p>
+            </div>
+
+            <div>
+                <strong>Model:</strong>
+                <p>{{ product.model }}</p>
+            </div>
+
+            <div>
+                <strong>Cost:</strong>
+                <p>{{ product.cost }}</p>
+            </div>
+
+            <div>
+                <strong>CreatedDate:</strong>
+                <p>{{ product.createdDate }}</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#" routerLink="/product/index" class="btn btn-primary">Back</a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
