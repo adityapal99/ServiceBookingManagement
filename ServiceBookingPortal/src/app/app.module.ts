@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './authentication/login/login.component';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AuthService } from './authentication/auth.service';
 import { AuthInterceptor } from './authentication.interceptor';
@@ -18,14 +18,17 @@ import { ProductModule } from './product/product.module';
   declarations: [
     AppComponent,
     HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    AuthenticationModule,
-    ProductModule
+    ProductModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     AuthService,
