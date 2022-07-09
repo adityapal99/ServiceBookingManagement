@@ -7,7 +7,17 @@ export interface UserRequest {
     description:string;
     status:string;
 }
-
+export interface UserReport{
+    "id":number;
+    "reportDate": Date;
+    "serviceType": string;
+    "actionTaken": string;
+    "diagnosisDetails": string;
+    "isPaid": string;
+    "visitFees": number;
+    "repairDetails": string;
+    "serviceRequestId": number;
+}
 export interface ResponseObj
 {
     status:number;
@@ -23,4 +33,16 @@ export interface Sample
     problem:string;
     description:string;
     status:string;
+}
+export interface SampleReport
+{
+    "reportDate": Date;
+    "serviceType": string;
+    "actionTaken": string;
+    "diagnosisDetails": string;
+    "isPaid": string;
+    "visitFees": number;
+    "repairDetails": string;
+    "serviceRequestId": number;
+
 }
