@@ -25,7 +25,7 @@
                 formControlName="id"
                 id="id" 
                 type="number" 
-                [(ngModel)]="request.id"
+                [(ngModel)]="report.id"
                 class="form-control">
             <div *ngIf="f.id.touched && f.id.invalid" class="alert alert-danger">
                 <div *ngIf="f.id.errors?.required">Reportid is required.</div>
@@ -64,7 +64,7 @@
                 formControlName="actionTaken"
                 id="actionTaken" 
                 type="text" 
-                [(ngModel)]="actionTaken.description"
+                [(ngModel)]="report.actionTaken"
                 class="form-control">
             <div *ngIf="f.actionTaken.touched && f.actionTaken.invalid" class="alert alert-danger">
                 <div *ngIf="f.actionTaken.errors?.required">ActionTaken is required.</div>

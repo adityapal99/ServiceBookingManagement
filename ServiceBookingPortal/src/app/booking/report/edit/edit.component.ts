@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookingService } from '../../booking.service';
-import { ResponseObj, UserReport, UserRequest } from '../../user-request';
+import { ResponseObj, UserReport} from '../../user-request';
 
 @Component({
   selector: 'app-edit',

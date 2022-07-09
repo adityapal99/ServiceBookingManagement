@@ -10,20 +10,21 @@ import { BookingService } from '../../booking.service';
 })
 export class CreateComponent implements OnInit {
   
-  form:FormGroup = new FormGroup({
-    reportDate: new FormControl('', Validators.required),
-    serviceType: new FormControl('', Validators.required),
-    actionTaken: new FormControl('', Validators.required),
-    diagnosisDetails: new FormControl('', Validators.required),
-    isPaid: new FormControl('', Validators.required),
-    visitFees: new FormControl('', Validators.required),
-    repairDetails: new FormControl('', Validators.required),
-    serviceRequestId: new FormControl('', Validators.required)
-  });
+  form:FormGroup; 
 
   constructor(private bookingService:BookingService,private router: Router) { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      reportDate: new FormControl('', Validators.required),
+      serviceType: new FormControl('', Validators.required),
+      actionTaken: new FormControl('', Validators.required),
+      diagnosisDetails: new FormControl('', Validators.required),
+      isPaid: new FormControl('', Validators.required),
+      visitFees: new FormControl('', Validators.required),
+      repairDetails: new FormControl('', Validators.required),
+      serviceRequestId: new FormControl('', Validators.required)
+    });
   }
 
   get f(){
