@@ -23,10 +23,14 @@ export class AuthService {
       loginObserver.subscribe(this.setSession.bind(this))
       return loginObserver.pipe(
         catchError((err) => {
-          console.error(err)
+          this.toastr.error(err, "Invalid Credentials")
           return of(null)
         }
       ));
+  }
+
+  Register() {
+
   }
 
   private setSession(authResult: ResponseObject) {
@@ -35,7 +39,7 @@ export class AuthService {
       console.log(authResult)
       console.log(jwtData)
 
-      const expiresAt = moment().add(jwtData.exp - moment.now(), 'millisecond');
+      const expiresAt = moment(jwtData.exp);
 
       localStorage.setItem('access_token', authResult.payload.accessToken);
       localStorage.setItem('id', jwtData.unique_name);
@@ -48,7 +52,8 @@ export class AuthService {
   private getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);
-    } catch(Error) {
+    } catch(Exception) {
+      this.toastr.error("Invalid Token")
       return null;
     }
   }
@@ -56,10 +61,12 @@ export class AuthService {
   logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("expires_at");
+
+      this.toastr.warning("Logged Out")
   }
 
   public isLoggedIn() {
-      return moment().isBefore(this.getExpiration());
+      return localStorage.getItem("access_token") !== null;
   }
 
   isLoggedOut() {
@@ -72,7 +79,7 @@ export class AuthService {
 
   getExpiration() {
     const expiration = localStorage.getItem("expires_at");
-    const expiresAt = JSON.parse(expiration ?? "");
+    const expiresAt = expiration ? JSON.parse(expiration) : 0;
     return moment(expiresAt);
   }
 
