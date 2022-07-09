@@ -1,0 +1,143 @@
+<div class="container">
+  
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="modal-header">						
+            <h4 class="modal-title">Edit Report</h4>
+        </div>
+        <div class="modal-body">
+
+        <div class="form-group">
+            <input 
+                formControlName="id"
+                id="id" 
+                type="number" 
+                [(ngModel)]="report.id"
+                class="form-control" style="display:none">
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="productid">Id:</label>
+            <input 
+                formControlName="id"
+                id="id" 
+                type="number" 
+                [(ngModel)]="request.id"
+                class="form-control">
+            <div *ngIf="f.id.touched && f.id.invalid" class="alert alert-danger">
+                <div *ngIf="f.id.errors?.required">Reportid is required.</div>
+            </div>
+        </div>
+         
+        <div class="form-group">
+            <label for="reportDate">Report Date</label>
+            <input 
+                formControlName="reportDate"
+                id="reportDate" 
+                type="date" 
+                [(ngModel)]="report.reportDate"
+                class="form-control">
+            <div *ngIf="f.reportDate && f.reportDate.invalid" class="alert alert-danger">
+                <div *ngIf="f.reportDate.errors?.required">ReportDate is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="serviceType">Service Type</label>
+            <input 
+                formControlName="serviceType"
+                id="serviceType" 
+                type="text" 
+                [(ngModel)]="report.serviceType"
+                class="form-control">
+            <div *ngIf="f.serviceType.touched && f.serviceType.invalid" class="alert alert-danger">
+                <div *ngIf="f.serviceType.errors?.required">ServiceType is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="actionTaken">ActionTaken</label>
+            <input 
+                formControlName="actionTaken"
+                id="actionTaken" 
+                type="text" 
+                [(ngModel)]="actionTaken.description"
+                class="form-control">
+            <div *ngIf="f.actionTaken.touched && f.actionTaken.invalid" class="alert alert-danger">
+                <div *ngIf="f.actionTaken.errors?.required">ActionTaken is required.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="DiagnosisDetails">DiagnosisDetails</label>
+            <input 
+                formControlName="diagnosisDetails"
+                id="diagnosisDetails" 
+                type="text" 
+                [(ngModel)]="report.diagnosisDetails"
+                class="form-control">
+            <div *ngIf="f.diagnosisDetails.touched && f.diagnosisDetails.invalid" class="alert alert-danger">
+                <div *ngIf="f.diagnosisDetails.errors?.required">DiagnosisDetails is required.</div>
+            </div>
+        </div>
+
+            <div class="form-group">
+            <label for="isPaid">IsPaid</label>
+            <input 
+                formControlName="isPaid"
+                id="isPaid" 
+                type="text" 
+                [(ngModel)]="report.isPaid"
+                class="form-control">
+            <div *ngIf="f.isPaid.touched && f.isPaid.invalid" class="alert alert-danger">
+                <div *ngIf="f.isPaid.errors?.required">IsPaid is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="visitFees">VisitFees</label>
+            <input 
+                formControlName="visitFees"
+                id="visitFees" 
+                type="number" 
+                [(ngModel)]="report.visitFees"
+                class="form-control">
+            <div *ngIf="f.visitFees.touched && f.visitFees.invalid" class="alert alert-danger">
+                <div *ngIf="f.visitFees.errors?.required">VisitFees is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="repairDetails">repairDetails</label>
+            <input 
+                formControlName="repairDetails"
+                id="repairDetails" 
+                type="text" 
+                [(ngModel)]="report.repairDetails"
+                class="form-control">
+            <div *ngIf="f.repairDetails.touched && f.repairDetails.invalid" class="alert alert-danger">
+                <div *ngIf="f.repairDetails.errors?.required">RepairDetails is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="serviceRequestId">serviceRequestId</label>
+            <input 
+                formControlName="serviceRequestId"
+                id="serviceRequestId" 
+                type="number" 
+                [(ngModel)]="report.serviceRequestId"
+                class="form-control">
+            <div *ngIf="f.serviceRequestId.touched && f.serviceRequestId.invalid" class="alert alert-danger">
+                <div *ngIf="f.serviceRequestId.errors?.required">ServiceRequestId is required.</div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+        <a href="#" routerLink="/report/index" class="btn btn-primary">Back</a>
+        <input type="submit" class="btn btn-success" [disabled]="!form.valid" value="Update">
+        </div>
+    </form>
+</div>
+</div>
+</div>

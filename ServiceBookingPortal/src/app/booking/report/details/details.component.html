@@ -1,0 +1,58 @@
+<div class="container">
+
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Report Details</h4>
+            </div>
+            <div class="container">
+            <div>
+                <strong>id:</strong>
+                <p>{{ report.id }}</p>
+            </div>
+
+            <div>
+                <strong>reportDate:</strong>
+                <p>{{ report.reportDate |date }}</p>
+            </div>
+
+            <div>
+                <strong>serviceType:</strong>
+                <p>{{ report.serviceType }}</p>
+            </div>
+
+            <div>
+                <strong>actionTaken:</strong>
+                <p>{{ report.actionTaken }}</p>
+            </div>
+
+            <div>
+                <strong>diagnosisDetails:</strong>
+                <p>{{ report.diagnosisDetails }}</p>
+            </div>
+
+            <div>
+                <strong>isPaid:</strong>
+                <p>{{ report.isPaid }}</p>
+            </div>
+            <div>
+                <strong>visitFees:</strong>
+                <p>{{ report.visitFees }}</p>
+            </div>
+            <div>
+                <strong>repairDetails:</strong>
+                <p>{{ report.repairDetails }}</p>
+            </div>
+            <div>
+                <strong>serviceRequestId:</strong>
+                <p>{{ report.serviceRequestId}}</p>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" routerLink="/report/index" class="btn btn-primary">Back</a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
