@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AuthService } from './authentication/auth.service';
 import { AuthInterceptor } from './authentication.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { HomeComponent } from './home/home.component';
 import { ProductModule } from './product/product.module';
 import { UsersModule } from './users/users.module';
@@ -30,7 +30,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
   ],
   providers: [
     AuthService,
-    AuthInterceptor
+    ToastrService,
   ],
   bootstrap: [AppComponent]
 })

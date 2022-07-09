@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,12 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProductMicroservice.DBContext;
 using ProductMicroservice.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductMicroservice
@@ -33,42 +36,55 @@ namespace ProductMicroservice
             services.AddScoped<IProductRepository, ProductRepository>();
             //services.AddSingleton<IProductRepository, InMemoryRepository>();
             services.AddDbContext<ProductContext>
-                (options => options.UseSqlServer(Configuration.GetConnectionString("my")));
+                (options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Product Service", Version = "1.0" });
             });
+
+            services.AddAuthentication(opt => {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:key"]))
+                    };
+                });
+
             services.AddCors((options) =>
             {
-                options.AddPolicy("angularApplication", (builder) =>
-                {
-                    builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyHeader()
-                    .WithMethods("GET", "POST", "PUT", "DELETE")
-                    .WithExposedHeaders("*");
-                });
+                options.AddPolicy("angularApplication", (builder) => builder.AllowAnyOrigin()
+                                                                            .AllowAnyHeader()
+                                                                            .AllowAnyMethod()
+                                                                            .AllowAnyHeader());
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddLog4Net();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseSwagger();
 
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Products Service (V 1.0)");
-            });
             app.UseHttpsRedirection();
 
-            app.UseRouting();
             app.UseCors("angularApplication");
+
+            app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

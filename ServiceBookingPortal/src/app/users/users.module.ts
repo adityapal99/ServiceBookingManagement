@@ -9,7 +9,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { EditComponent } from './edit/edit.component';
 import { IndexComponent } from './index/index.component';
 import { AuthInterceptor } from '../authentication.interceptor';
-import { ToastrService } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { DetailsComponent } from './details/details.component';
 
 
@@ -26,9 +26,10 @@ import { DetailsComponent } from './details/details.component';
     UsersRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
+    ToastrService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]

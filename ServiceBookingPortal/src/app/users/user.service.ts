@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../authentication/auth.service';
 import { User, UserListResponse, UserResponse } from './user.model';
 
 @Injectable({
@@ -12,35 +14,35 @@ export class UserService {
 
   apiUrl: string = environment.ConnectedServices.User;
 
-  constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
+  constructor(private httpClient: HttpClient, private toastr: ToastrService, private router: Router) { }
 
   getAll(): Observable<UserListResponse> {
     return this.httpClient.get(this.apiUrl + "user").pipe(
-      catchError<any, any>(this.errorHandler)
+      catchError<any, any>(this.errorHandler.bind(this))
     );
   }
 
   create(user: User): Observable<UserResponse> {
     return this.httpClient.post(this.apiUrl + "user", user).pipe(
-      catchError<any, any>(this.errorHandler)
+      catchError<any, any>(this.errorHandler.bind(this))
     );
   }
 
   find(id: number): Observable<UserResponse> {
     return this.httpClient.get(this.apiUrl + "user/" + id).pipe(
-      catchError<any, any>(this.errorHandler)
+      catchError<any, any>(this.errorHandler.bind(this))
     );
   }
 
   update(id: number, user: User): Observable<UserResponse> {
     return this.httpClient.put(this.apiUrl + "user/" + id, user).pipe(
-      catchError<any, any>(this.errorHandler)
+      catchError<any, any>(this.errorHandler.bind(this))
     );
   }
 
   delete(id: number): Observable<Response> {
     return this.httpClient.delete(this.apiUrl + "user/" + id).pipe(
-      catchError<any, any>(this.errorHandler)
+      catchError<any, any>(this.errorHandler.bind(this))
     );
   }
 
@@ -52,7 +54,9 @@ export class UserService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
 
+    this.router.navigate(['/auth/login']);
+
     this.toastr.error(errorMessage, 'Error');
     return throwError(() => new Error(errorMessage));
- }
+  }
 }

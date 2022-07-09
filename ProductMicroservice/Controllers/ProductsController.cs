@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,7 @@ namespace ProductMicroservice.Controllers
 
         // GET: api/Products
         [HttpGet]
+        // [Authorize]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             try
@@ -42,6 +45,7 @@ namespace ProductMicroservice.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
+        // [Authorize]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             try
@@ -65,6 +69,7 @@ namespace ProductMicroservice.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
+        // [Authorize]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
             _log4net.Info("PutProduct Method called");
@@ -86,6 +91,7 @@ namespace ProductMicroservice.Controllers
 
         // POST: api/Products
         [HttpPost]
+        // [Authorize]
         public async Task<ActionResult<Product>> PostProduct([FromBody]Product product)
         {
             try
@@ -111,13 +117,14 @@ namespace ProductMicroservice.Controllers
             }
             catch(Exception e)
             {
-                _log4net.Error("Database Error");
+                _log4net.Error("Database Error", e);
                 return StatusCode(500);
             }
         }
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
+        // [Authorize]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
             try
