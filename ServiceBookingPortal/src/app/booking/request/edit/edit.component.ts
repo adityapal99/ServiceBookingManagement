@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookingService } from '../../booking.service';
-import { UserRequest } from '../../user-request';
+import { ResponseObj, UserRequest } from '../../user-request';
 
 @Component({
   selector: 'app-edit',
@@ -27,6 +27,10 @@ export class EditComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['requestId'];
+    this.bookingService.getRquestById(this.id).subscribe((data: ResponseObj)=>{
+      this.request = data.payload
+    });
   }
 
   get f(){
@@ -38,7 +42,7 @@ export class EditComponent implements OnInit {
     this.bookingService.updateRequest(this.id, this.form.value).subscribe(res => {
          console.log('Request updated successfully!');
          this.router.navigateByUrl('request/index');
-    })
+    });
   }
 
 }
