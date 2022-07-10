@@ -20,7 +20,6 @@ namespace UserMicroservice.Repository
 
         public UserRepository(Database db, IAuthorizationService_Api authApi)
         {
-            Console.WriteLine("Instantiated!!!!");
             _db = db;
             _authApi = authApi;
         }

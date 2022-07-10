@@ -20,7 +20,6 @@ namespace UserMicroservice.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer("Data Source=localhost;Initial Catalog=student;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

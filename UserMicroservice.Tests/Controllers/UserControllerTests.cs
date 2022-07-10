@@ -35,7 +35,7 @@ namespace UserMicroservice.Controllers.Tests
         public void Setup()
         {
             var userRepoMoq = new Mock<IUserRepository>();
-            var loggerMoq = new Mock<ILogger>();
+            var loggerMoq = new Mock<ILogger<UserController>>();
             var users = MockData.GetAppUsers();
 
             userRepoMoq.Setup(x => x.GetAllUsers())

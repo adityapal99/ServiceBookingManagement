@@ -28,11 +28,11 @@ namespace UserMicroservice.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<UserController> _logger;
         private readonly IUserRepository _userRepository;
 
 
-        public UserController(ILogger logger, IUserRepository userRepository)
+        public UserController(ILogger<UserController> logger, IUserRepository userRepository)
         {
             this._logger = logger;
             this._userRepository = userRepository;

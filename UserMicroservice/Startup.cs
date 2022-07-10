@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserMicroservice.Models;
 using UserMicroservice.Models;
 using UserMicroservice.Repository;
 using UserMicroservice.Services;
@@ -92,11 +94,19 @@ namespace UserMicroservice
 
             services.AddDbContext<Database>(options =>
             {
+                options.UseSqlServer(Configuration.GetConnectionString("Database"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
+
+            services.AddDbContext<InMemoryDatabase>(options =>
+            {
+                options.UseInMemoryDatabase(Configuration.GetConnectionString("InMemoryDB"));
+            });
+
             services.AddHttpClient<IAuthorizationService_Api, AuthorizationService_Api>();
             // services.AddScoped<IAuthorizationService_Api, AuthorizationService_Api>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            // services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, InMemoryUserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

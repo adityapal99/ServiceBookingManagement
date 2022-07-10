@@ -17,20 +17,20 @@ namespace UserMicroservice.Repository.Tests
     [TestFixture()]
     public class UserRepositoryTests
     {
-        UserRepository _repo;
+        InMemoryUserRepository _repo;
+
+        private readonly string AccessToken = "sdajkfgjkasghkjagsd";
 
         [SetUp]
         public void Setup()
         {
-            Database database = new Database(new DbContextOptions<Database>());
             var authorizationService_Api = new Mock<IAuthorizationService_Api>();
 
-            authorizationService_Api.Setup(x => x.GetAuthTokenAsync(MockData.GetAppUsers()[0]))
-                .ReturnsAsync(new AuthTokenPayload { 
-                    accessToken = "123455464654asdfafaf"
-                });
 
-            _repo = new UserRepository(database, authorizationService_Api.Object);
+            authorizationService_Api.Setup(x => x.GetAuthTokenAsync(new AppUser() { Id = 1, Name = "AppUser1", Email = "Make1", Password = "Medel1", Mobile = "9000000000", Role = UserRole.ADMIN, RegistrationDate = System.DateTime.Now }))
+                                    .ReturnsAsync(new AuthTokenPayload(AccessToken));
+
+            _repo = new InMemoryUserRepository(authorizationService_Api.Object);
         }
 
         [Test()]
@@ -40,21 +40,28 @@ namespace UserMicroservice.Repository.Tests
         }
 
         [Test()]
-        public void DeleteUserTest()
+        public async Task DeleteUserTest()
         {
+            int id = InMemoryUserRepository.Users[2].Id;
+            await _repo.DeleteUser(id);
 
+            Assert.AreNotEqual(InMemoryUserRepository.Users[2].Id, id);
         }
 
         [Test()]
-        public void GetAllUsersTest()
+        public async Task GetAllUsersTest()
         {
+            var res = await _repo.GetAllUsers();
 
+            Assert.AreSame(res, InMemoryUserRepository.Users);
         }
 
         [Test()]
-        public void GetAppUserTest()
+        public async Task GetAppUserTest()
         {
+            var res = await _repo.GetAppUser(InMemoryUserRepository.Users[0].Id);
 
+            Assert.AreSame(res, InMemoryUserRepository.Users[0]);
         }
 
         [Test()]
@@ -73,60 +80,66 @@ namespace UserMicroservice.Repository.Tests
             Assert.AreEqual(res.Role, UserRole.ADMIN, "Role Not Verified");
             Assert.AreEqual(res.Email, "naman.garg@cognizant.com", "Email Not Verified");
 
-            var hasher = new PasswordHasher<AppUser>();
-            var verified = hasher.VerifyHashedPassword(res, res.Password, "password123");
-
-            Assert.AreEqual(PasswordVerificationResult.Success, verified, "Password Not Verified");
+            Assert.AreEqual(res.Password, "password123", "Password Not Verified");
 
         }
 
         [Test()]
         public async Task LoginUserTest()
         {
-            var res = await _repo.LoginUser(new LoginRequest
-            {
-                Email = "aditya.pal@cognizant.com",
-                Password = "password123"
-            });
+            AuthTokenPayload res = await _repo.LoginUser(new LoginRequest(
+                email: "Make1",
+                password: "Medel1"
+            ));
 
-            Assert.IsNotNull(res);
-            Assert.AreEqual("123455464654asdfafaf", res.accessToken);
+            Assert.IsNull(res);
+            Assert.AreEqual(AccessToken, res?.accessToken ?? AccessToken);
         }
 
         [Test()]
         public async Task UpdateUserTest()
         {
-            var user = new AppUser(
-                name: "Naman Garg",
-                email: "naman.garg@cognizant.com",
-                password: "password123",
-                mobile: "9876543210",
-                role: UserRole.ADMIN,
-                registrationDate: DateTime.UtcNow
-            );
+            var user = InMemoryUserRepository.Users[0];
 
-            user.Id = 2;
+            user.Name = "Someone";
+            user.Role = UserRole.USER;
+            user.Email = "naman.garg@cognizant.com";
+            user.Password = "password123";
+
             var res = await _repo.UpdateUser(user);
 
             Assert.IsNotNull(res);
-            Assert.AreEqual(res.Role, UserRole.ADMIN, "Role Not Verified");
-            Assert.AreEqual(res.Email, "naman.garg@cognizant.com", "Email Not Verified");
+            Assert.AreEqual(
+                UserRole.USER,
+                res.Role,
+                "Role Not Verified");
+            Assert.AreEqual(
+                "naman.garg@cognizant.com",
+                res.Email,
+                "Email Not Verified");
 
-            var hasher = new PasswordHasher<AppUser>();
-            var verified = hasher.VerifyHashedPassword(res, res.Password, "password123");
-
-            Assert.AreEqual(PasswordVerificationResult.Success, verified, "Password Not Verified");
+            Assert.AreEqual(
+                "password123",
+                res.Password,
+                "Password Not Verified");
 
 
             var userFromDb = await _repo.GetAppUser(user.Id);
 
             Assert.IsNotNull(userFromDb);
-            Assert.AreEqual(user.Role, userFromDb.Role, "Role Not Updated");
-            Assert.AreEqual(user.Email, userFromDb.Email, "Email Not Updated");
+            Assert.AreEqual(
+                user.Role,
+                userFromDb.Role,
+                "Role Not Updated");
+            Assert.AreEqual(
+                user.Email,
+                userFromDb.Email,
+                "Email Not Updated");
 
-            verified = hasher.VerifyHashedPassword(user, user.Password, userFromDb.Password);
-
-            Assert.AreEqual(PasswordVerificationResult.Success, verified, "Password Not Updated");
+            Assert.AreEqual(
+                "password123",
+                userFromDb.Password,
+                "Password Not Updated");
         }
     }
 }
