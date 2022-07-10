@@ -13,12 +13,13 @@ namespace UserMicroservice.Models
         {
         }
 
-        public AppUser(string name, string email, string password, string mobile, DateTime? registrationDate)
+        public AppUser(string name, string email, string password, string mobile, DateTime? registrationDate, UserRole role = UserRole.USER)
         {
             Name = name;
             Email = email;
             Password = password;
             Mobile = mobile;
+            Role = role;
             RegistrationDate = registrationDate ?? DateTime.UtcNow;
         }
 

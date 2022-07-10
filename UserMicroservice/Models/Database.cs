@@ -13,14 +13,14 @@ namespace UserMicroservice.Models
     {
         protected readonly IConfiguration Configuration;
 
-        public Database(DbContextOptions<Database> options, IConfiguration configuration) : base(options)
+        public Database(DbContextOptions<Database> options/*, IConfiguration configuration*/) : base(options)
         {
-            Configuration = configuration;
+            /*Configuration = configuration;*/
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(Configuration.GetConnectionString("Database"));
+            options.UseSqlServer("Data Source=localhost;Initial Catalog=student;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

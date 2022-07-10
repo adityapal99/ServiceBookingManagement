@@ -28,11 +28,11 @@ namespace UserMicroservice.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger _logger;
         private readonly IUserRepository _userRepository;
 
 
-        public UserController(ILogger<UserController> logger, IUserRepository userRepository)
+        public UserController(ILogger logger, IUserRepository userRepository)
         {
             this._logger = logger;
             this._userRepository = userRepository;
@@ -42,13 +42,13 @@ namespace UserMicroservice.Controllers
         [SwaggerResponse(200, "Fetched Users", typeof(Response<List<AppUser>>))]
         [SwaggerResponse(404, "User Not Found", typeof(Response))]
         [HttpGet, Authorize]
-        public async Task<ActionResult<Response<List<AppUser>>>> Get()
+        public async Task<ActionResult> Get()
         {
             _logger.LogInformation("Getting list of all users");
             return Ok(new Response<List<AppUser>>(
-                "Users Found", 
-                true, 
-                await _userRepository.GetAllUsers()
+                    "Users Found", 
+                    true, 
+                    await _userRepository.GetAllUsers()
                 ));
         }
 
@@ -56,7 +56,7 @@ namespace UserMicroservice.Controllers
         [SwaggerResponse(404, "User Not Found", typeof(Response))]
         [SwaggerResponse(200, "Fetched User Details", typeof(Response<AppUser>))]
         [HttpGet("{id}"), Authorize]
-        public async Task<ActionResult<Response<AppUser>>> Get(int id)
+        public async Task<ActionResult> Get(int id)
         {
             _logger.LogInformation("Getting list of a particular user");
             AppUser user = await _userRepository.GetAppUser(id);
@@ -74,7 +74,7 @@ namespace UserMicroservice.Controllers
         [SwaggerResponse(501, "Server Error", typeof(Response))]
         [SwaggerResponse(201, "Created", typeof(Response<AppUser>))]
         [HttpPost]
-        public async Task<ActionResult<Response<AppUser>>> Post([FromBody] AppUser user)
+        public async Task<ActionResult> Post([FromBody] AppUser user)
         {
             AppUser insertedUser = await _userRepository.InsertUser(user);
             _logger.LogInformation("Added a new user");
@@ -86,7 +86,7 @@ namespace UserMicroservice.Controllers
         [SwaggerResponse(404, "Not Found", typeof(Response))]
         [SwaggerResponse(202, "User Updated", typeof(Response<AppUser>))]
         [HttpPut("{id}"), Authorize()]
-        public async Task<ActionResult<Response<AppUser>>> Put(int id, [FromBody] AppUser user)
+        public async Task<ActionResult> Put(int id, [FromBody] AppUser user)
         {
             _logger.LogInformation("Ids dont match with eachother");
             if (user.Id != id) return BadRequest(new Response("Ids Dont match", false));
@@ -104,7 +104,7 @@ namespace UserMicroservice.Controllers
         [SwaggerResponse(200, "Get Authentication Token", typeof(Response))]
         [SwaggerResponse(404, "User Not Found", typeof(Response))]
         [HttpDelete("{id}"), Authorize]
-        public async Task<ActionResult<Response>> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             _logger.LogInformation("Deleting user with id {}", id);
             await _userRepository.DeleteUser(id);
@@ -117,7 +117,7 @@ namespace UserMicroservice.Controllers
         [SwaggerResponse(401, "Unautherized", typeof(Response))]
         [SwaggerResponse(502, "Internal Server Error", typeof(Response))]
         [HttpPost("login")]
-        public async Task<ActionResult<Response<AuthTokenPayload?>>> Login(LoginRequest login)
+        public async Task<ActionResult> Login(LoginRequest login)
         {
             _logger.LogInformation("logging in user");
             AuthTokenPayload token = await _userRepository.LoginUser(login);

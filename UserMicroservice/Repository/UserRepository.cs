@@ -91,6 +91,9 @@ namespace UserMicroservice.Repository
         {
             if(await _db.AppUsers.FindAsync(user.Id) == null) return null;
 
+            var hasher = new PasswordHasher<AppUser>();
+            user.Password = hasher.HashPassword(user, user.Password);
+
             _db.Entry(user).State = EntityState.Modified;
 
             try
