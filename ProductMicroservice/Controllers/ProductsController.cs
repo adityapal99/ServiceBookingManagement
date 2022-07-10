@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductMicroservice;
 using ProductMicroservice.DBContext;
+using ProductMicroservice.Models;
 using ProductMicroservice.Repository;
 
 namespace ProductMicroservice.Controllers
@@ -28,13 +29,14 @@ namespace ProductMicroservice.Controllers
         // GET: api/Products
         [HttpGet]
         // [Authorize]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<ResponseObj>> GetProducts()
         {
             try
             {
                 _log4net.Info("GetProducts Method Called");
                 IEnumerable<Product> products = await _repository.GetProducts();
-                return Ok(new { status = 200, msg = "All products", payload = products });
+                return Ok(new ResponseObj{ status = 200, msg = "All products", payload = products });
+                //return Ok(products);
             }
             catch
             {
@@ -46,7 +48,7 @@ namespace ProductMicroservice.Controllers
         // GET: api/Products/5
         [HttpGet("{id}")]
         // [Authorize]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ResponseObj>> GetProduct(int id)
         {
             try
             {
@@ -58,7 +60,8 @@ namespace ProductMicroservice.Controllers
                     return NotFound();
                 }
 
-                return Ok(new { status = 200, msg = "Product Found", payload = product });
+                return Ok(new ResponseObj{ status = 200, msg = "Product Found", payload = product });
+                //return Ok(product);
             }
             catch
             {
@@ -70,7 +73,7 @@ namespace ProductMicroservice.Controllers
         // PUT: api/Products/5
         [HttpPut("{id}")]
         // [Authorize]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<ActionResult<ResponseObj>> PutProduct(int id, Product product)
         {
             _log4net.Info("PutProduct Method called");
             if (id != product.Id)
@@ -79,12 +82,13 @@ namespace ProductMicroservice.Controllers
             }
             try
             {
-                await _repository.PutProduct(id, product);
-                return Ok(new { status = 200, msg = "Update Successful", payload = product });
+                product = await _repository.PutProduct(id, product);
+                return Ok(new ResponseObj{ status = 200, msg = "Update Successful", payload = product });
+                //return Ok(product);
             }
             catch
             {
-                _log4net.Error("Databse error");
+                _log4net.Error("Database error");
                 return StatusCode(500);
             }
         }
@@ -92,22 +96,16 @@ namespace ProductMicroservice.Controllers
         // POST: api/Products
         [HttpPost]
         // [Authorize]
-        public async Task<ActionResult<Product>> PostProduct([FromBody]Product product)
+        public async Task<ActionResult<ResponseObj>> PostProduct([FromBody]Product product)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     _log4net.Info("PostProduct Method Called");
-                   /* Product p = new Product();
-                    p.Name = product.Name;
-                    p.Make = product.Make;
-                    p.Model = product.Model;
-                    p.Cost = product.Cost;
-                    p.CreatedDate = new DateTime();*/
                     Product productWithId = await _repository.CreateProduct(product);
-                    //Product productWithId = await _repository.CreateProduct(p);
-                    return CreatedAtAction("PostProduct", new { status = 200, msg = "Product Added", payload = productWithId });
+                    return CreatedAtAction("PostProduct", new ResponseObj { status = 200, msg = "Product Added", payload = productWithId });
+                    //return CreatedAtAction("PostProduct", productWithId);
                 }
                 else
                 {
@@ -136,7 +134,8 @@ namespace ProductMicroservice.Controllers
                     return NotFound();
                 }
 
-                return Ok(new { status = 200, msg = "Deleted Successfully", payload = product });
+                return Ok(new ResponseObj{ status = 200, msg = "Deleted Successfully", payload = product });
+                //return Ok(product);
             }
             catch
             {
