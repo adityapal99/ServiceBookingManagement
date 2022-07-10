@@ -1,8 +1,8 @@
 <!--<div class="container">
     <h1>Products</h1>
-  
+
     <a href="#" routerLink="/product/create/" class="btn btn-success">Create</a>
-    
+
     <table class="table table-bordered">
       <tr>
         <th>ID</th>
@@ -37,7 +37,7 @@
       <h2>Manage <b>Products</b></h2>
     </div>
     <div class="col-sm-6">
-      <a href="#" routerLink="/product/create/" class="btn btn-success" ><span>Add New Product</span></a>						
+      <a href="#" routerLink="/product/create/" class="btn btn-success" ><span>Add New Product</span></a>
     </div>
           </div>
       </div>
@@ -60,14 +60,14 @@
                   <td>{{ product.make }}</td>
                   <td>{{ product.model }}</td>
                   <td>{{ product.cost }}</td>
-                  <td>{{ product.createdDate | date }}</td>
+                  <td>{{ product.createdDate | date: "dd/MM/yyyy" }}</td>
                   <td>
                       <a href="#" routerLink="/product/edit/{{product.id}}" class="edit"><span>Edit</span></a>
                       <a href="#" routerLink="/product/details/{{product.id}}" class="edit"><span>Details</span></a>
                       <button type="button" (click)="deletePost(product.id)" class="btn btn-danger">Delete</button>
                       <!--<a href="#deleteEmployeeModal" class="delete"><i class="bi bi-trash"></i><span>Delete</span></a>-->
                   </td>
-              </tr>				
+              </tr>
           </tbody>
       </table>
   </div>
@@ -78,10 +78,10 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <form>
-        <div class="modal-header">						
+        <div class="modal-header">
           <h4 class="modal-title">Delete Employee</h4>
         </div>
-        <div class="modal-body">					
+        <div class="modal-body">
           <p>Are you sure you want to delete these Records?</p>
           <p class="text-warning"><small>This action cannot be undone.</small></p>
         </div>

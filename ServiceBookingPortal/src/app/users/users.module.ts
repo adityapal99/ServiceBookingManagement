@@ -11,6 +11,7 @@ import { IndexComponent } from './index/index.component';
 import { AuthInterceptor } from '../authentication.interceptor';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { DetailsComponent } from './details/details.component';
+import { CreateComponent } from './create/create.component';
 
 
 
@@ -18,7 +19,8 @@ import { DetailsComponent } from './details/details.component';
   declarations: [
     IndexComponent,
     DetailsComponent,
-    EditComponent
+    EditComponent,
+    CreateComponent
   ],
   imports: [
     CommonModule,

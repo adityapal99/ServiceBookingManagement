@@ -34,14 +34,14 @@ export class ProductService {
 
   create(product:Sample): Observable<any> {
 
-    return this.httpClient.post(this.apiURL + 'api/products/', JSON.stringify(product), this.httpOptions)
+    return this.httpClient.post(this.apiURL + 'api/products/', product, this.httpOptions)
 
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
-  find(id:number): Observable<any> {
+  find(id: number): Observable<any> {
 
     return this.httpClient.get(this.apiURL + 'api/products/' + id)
 
@@ -50,9 +50,9 @@ export class ProductService {
     )
   }
 
-  update(id:number, product:Product): Observable<any> {
+  update(id: number, product:Product): Observable<any> {
 
-    return this.httpClient.put(this.apiURL + 'api/products/' + id, JSON.stringify(product), this.httpOptions)
+    return this.httpClient.put(this.apiURL + 'api/products/' + id, product, this.httpOptions)
 
     .pipe(
       catchError(this.errorHandler)

@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../authentication/auth.service';
-import { User, UserListResponse, UserResponse } from './user.model';
+import { User, UserCreate, UserListResponse, UserResponse } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class UserService {
     );
   }
 
-  create(user: User): Observable<UserResponse> {
+  create(user: UserCreate): Observable<UserResponse> {
     return this.httpClient.post(this.apiUrl + "user", user).pipe(
       catchError<any, any>(this.errorHandler.bind(this))
     );

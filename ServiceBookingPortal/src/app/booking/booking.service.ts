@@ -9,8 +9,8 @@ import { Sample, SampleReport, UserReport, UserRequest } from './user-request';
   providedIn: 'root'
 })
 export class BookingService {
-  private apiUrl:string = environment.ConnectedServices.ServiceBooking;
- private apiUrl2:string= this.apiUrl+"/report";
+  private apiUrl:string = environment.ConnectedServices.ServiceBooking + "api/service/";
+ private apiUrl2:string= this.apiUrl+"report/";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -46,7 +46,7 @@ export class BookingService {
 
   addRequest(request:Sample):Observable<any>
   {
-    return this.httpClient.post(this.apiUrl, JSON.stringify(request),this.httpOptions)
+    return this.httpClient.post(this.apiUrl, request, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
@@ -54,7 +54,7 @@ export class BookingService {
 
   updateRequest(id:number, request:UserRequest): Observable<any> {
 
-    return this.httpClient.put(this.apiUrl + id, JSON.stringify(request), this.httpOptions)
+    return this.httpClient.put(this.apiUrl + id, request, this.httpOptions)
 
     .pipe(
       catchError(this.errorHandler)
@@ -100,7 +100,7 @@ getReport():Observable<any>
 
   addReport(report:SampleReport):Observable<any>
   {
-    return this.httpClient.post(this.apiUrl2, JSON.stringify(report),this.httpOptions)
+    return this.httpClient.post(this.apiUrl2, report, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
@@ -108,7 +108,7 @@ getReport():Observable<any>
 
   updateReport(id:number, report:UserReport): Observable<any> {
 
-    return this.httpClient.put(this.apiUrl2 + id, JSON.stringify(report), this.httpOptions)
+    return this.httpClient.put(this.apiUrl2 + id, report, this.httpOptions)
 
     .pipe(
       catchError(this.errorHandler)

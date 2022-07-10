@@ -34,7 +34,7 @@
 
             <div>
                 <strong>CreatedDate:</strong>
-                <p>{{ product.createdDate }}</p>
+                <p>{{ product.createdDate | date: "dd/MM/yyyy" }}</p>
             </div>
             <div class="modal-footer">
                 <a href="#" routerLink="/product/index" class="btn btn-primary">Back</a>

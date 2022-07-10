@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductMicroservice", "ProductMicroservice.csproj", "{8B9C9A9E-06FD-4D9C-8ED4-EC8EF68874EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductMicroserviceTest", "..\ProductMicroserviceTest\ProductMicroserviceTest.csproj", "{70C0FAE9-5389-4B04-B0F4-B21E703D0DEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductMicroservice.Tests", "..\ProductMicroservice.Tests\ProductMicroserviceTest.csproj", "{70C0FAE9-5389-4B04-B0F4-B21E703D0DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

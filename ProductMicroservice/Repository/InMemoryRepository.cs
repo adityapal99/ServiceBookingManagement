@@ -4,8 +4,8 @@ namespace ProductMicroservice.Repository
 {
     public class InMemoryRepository : IProductRepository
     {
-        int id = 5;
-        public List<Product> Products = new List<Product>
+        public static int id = 5;
+        public static List<Product> Products = new List<Product>
         {
             new Product() {Id=1,Name="Product1", Make="Make1", Model="Medel1", Cost=1000, CreatedDate = System.DateTime.Now},
             new Product() {Id=2,Name="Product2", Make="Make2", Model="Medel2", Cost=2000, CreatedDate = System.DateTime.Now},

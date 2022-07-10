@@ -28,7 +28,7 @@ namespace ProductMicroservice.Controllers
 
         // GET: api/Products
         [HttpGet]
-        // [Authorize]
+        [Authorize]
         public async Task<ActionResult<ResponseObj>> GetProducts()
         {
             try
@@ -47,7 +47,7 @@ namespace ProductMicroservice.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}")]
-        // [Authorize]
+        [Authorize]
         public async Task<ActionResult<ResponseObj>> GetProduct(int id)
         {
             try
@@ -72,7 +72,7 @@ namespace ProductMicroservice.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        // [Authorize]
+        [Authorize]
         public async Task<ActionResult<ResponseObj>> PutProduct(int id, Product product)
         {
             _log4net.Info("PutProduct Method called");
@@ -95,7 +95,7 @@ namespace ProductMicroservice.Controllers
 
         // POST: api/Products
         [HttpPost]
-        // [Authorize]
+        [Authorize]
         public async Task<ActionResult<ResponseObj>> PostProduct([FromBody]Product product)
         {
             try
@@ -122,7 +122,7 @@ namespace ProductMicroservice.Controllers
 
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
-        // [Authorize]
+        [Authorize]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
             try

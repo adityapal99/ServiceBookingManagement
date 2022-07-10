@@ -20,7 +20,7 @@ export class EditComponent implements OnInit {
     name: new FormControl("", [Validators.required]),
     email: new FormControl("", [Validators.required]),
     mobile: new FormControl("", [Validators.required]),
-    role: new FormControl("", [Validators.required]),
+    role: new FormControl(0, [Validators.required]),
     createdDate: new FormControl("", [Validators.required]),
   });
 
@@ -43,7 +43,7 @@ export class EditComponent implements OnInit {
         email: new FormControl(this.user.email, [Validators.required]),
         mobile: new FormControl(this.user.mobile, [Validators.required]),
         role: new FormControl({ value: this.user.role, disabled: true }, [Validators.required]),
-        createdDate: new FormControl({ value: this.user.createdDate, disabled: true}, [Validators.required]),
+        createdDate: new FormControl({ value: this.user.registrationDate, disabled: true}, [Validators.required]),
       });
     });
 

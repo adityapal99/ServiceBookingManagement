@@ -36,9 +36,9 @@
         <div class="col-sm-6">
           <h2>Manage <b>Users</b></h2>
         </div>
-        <!-- <div class="col-sm-6">
-      <a href="#" routerLink="/product/create/" class="btn btn-success" ><span>Add New Product</span></a>
-    </div> -->
+        <div class="col-sm-6">
+          <a href="#" routerLink="/users/create/" class="btn btn-success" ><span>Add New User</span></a>
+        </div>
       </div>
     </div>
     <table class="table table-striped table-hover">
@@ -59,8 +59,8 @@
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.mobile }}</td>
-          <td>{{ user.role }}</td>
-          <td>{{ user.createdDate }}</td>
+          <td>{{ user.role == 0 ? "Admin" : "User" }}</td>
+          <td>{{ user.registrationDate | date: "dd/MM/yyyy" }}</td>
           <td>
             <a routerLink="/users/edit/{{ user.id }}" class="edit"
               ><span>Edit</span></a

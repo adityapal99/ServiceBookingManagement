@@ -58,7 +58,7 @@ namespace UserMicroservice.Repository
         public async Task<List<AppUser>> GetAllUsers()
         {
             List<AppUser> users = Users;
-            return users;
+            return await Task.FromResult(users);
         }
 
         public async Task<AppUser> UpdateUser(AppUser user)

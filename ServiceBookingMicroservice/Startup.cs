@@ -2,26 +2,24 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ServiceBooking.DatabaseContext;
+using ServiceBooking.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using UserMicroservice.Models;
-using UserMicroservice.Repository;
-using UserMicroservice.Services;
+using System.Text;
 
-namespace UserMicroservice
+
+namespace ServiceBookingMicroservice
 {
     public class Startup
     {
@@ -36,10 +34,23 @@ namespace UserMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddLogging();
+
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+
+            // services.AddDbContext<ServiceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("my")));
+            services.AddDbContext<ServiceContext>(options => options.UseInMemoryDatabase(Configuration.GetConnectionString("inMemory")));
+
+
+
+            services.AddCors(options =>
+                options.AddDefaultPolicy(
+                    builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+                )
+            );
+
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserMicroservice", Version = "v1" });
+                c.SwaggerDoc("v1.0", new OpenApiInfo { Title = "Product Service", Version = "1.0" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
@@ -68,7 +79,7 @@ namespace UserMicroservice
                     }
                 });
             });
-            /*services.AddIdentity<AppUser, IdentityRole>().AddDefaultTokenProviders();*/
+
             services.AddAuthentication(opt => {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -86,43 +97,31 @@ namespace UserMicroservice
                 };
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AngularPolicy", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            });
 
-            services.AddDbContext<Database>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("Database"));
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            });
-
-            services.AddDbContext<InMemoryDatabase>(options =>
-            {
-                options.UseInMemoryDatabase(Configuration.GetConnectionString("InMemoryDB"));
-            });
-
-            services.AddHttpClient<IAuthorizationService_Api, AuthorizationService_Api>();
-            // services.AddScoped<IAuthorizationService_Api, AuthorizationService_Api>();
-            // services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IUserRepository, InMemoryUserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddLog4Net();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UserMicroservice v1"));
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Products Service (V 1.0)");
+                });
+
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors("AngularPolicy");
+            app.UseCors();
 
             app.UseAuthentication(); // TO Use the [Authorize] Annotation
 

@@ -6,9 +6,15 @@ export interface User {
     email: string;
     mobile: string;
     role: Role;
-    createdDate: Date;
+    registrationDate: Date;
 }
 
+export interface UserCreate {
+  name: string;
+  email: string;
+  mobile: string;
+  role: Role;
+}
 
 export interface UserResponse {
     message: string;

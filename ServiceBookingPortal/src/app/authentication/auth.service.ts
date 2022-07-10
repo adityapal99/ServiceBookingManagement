@@ -74,7 +74,7 @@ export class AuthService {
   }
 
   isAdmin() {
-    return this.isLoggedIn() && localStorage.getItem("role") === Role.ADMIN;
+    return this.isLoggedIn() && parseInt(localStorage.getItem("role") ?? '') === Role.ADMIN;
   }
 
   getExpiration() {

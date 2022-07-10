@@ -12,6 +12,7 @@ import { IndexComponent as RequestIndex } from './report/index/index.component';
 import { CreateComponent as RequestCreate} from './report/create/create.component';
 import { DetailsComponent as RequestDetails } from './report/details/details.component';
 import { EditComponent as RequestEdit } from './report/edit/edit.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 @NgModule({
@@ -30,7 +31,10 @@ import { EditComponent as RequestEdit } from './report/edit/edit.component';
     BookingRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+  ],
+  providers: [
+    ToastrService
   ]
 })
 export class BookingModule { }
