@@ -34,7 +34,8 @@ h2 {
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  min-height: 100%;
+
+  min-height: 88vh;
   padding: 20px;
 }
 
@@ -42,14 +43,14 @@ h2 {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
-  padding: 30px;
+  padding-top: 40px;
   width: 90%;
   max-width: 450px;
   position: relative;
-  padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
+  margin: auto;
 }
 
 #formFooter {
@@ -225,7 +226,9 @@ input[type=text]::placeholder, input[type=password]::placeholder {
   -moz-animation-delay: 1s;
   animation-delay: 1s;
 }
-
+.underlineHover {
+  margin-left: 5px;
+}
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
   display: block;
@@ -256,4 +259,25 @@ input[type=text]::placeholder, input[type=password]::placeholder {
 
 #icon {
   width:60%;
+}
+
+.not-reg-text {
+  margin-bottom: 10px;
+}
+
+.gradient-button input {
+  display: inline-block !important;
+  padding: 10px 20px !important;
+  color: #fff !important;
+  text-transform: capitalize;
+  font-size: 15px;
+  background: rgb(19,175,240);
+  background: linear-gradient(105deg, rgba(91,104,235,1) 0%, rgba(40,225,253,1) 100%);
+  border-radius: 23px;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+  transition: all .5s;
+  cursor: pointer;
+
+  width: 70%;
 }

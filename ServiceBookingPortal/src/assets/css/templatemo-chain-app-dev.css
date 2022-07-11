@@ -253,6 +253,7 @@ body {
   font-weight: 500 !important;
   letter-spacing: 0.3px !important;
   transition: all .5s;
+  cursor: pointer;
 }
 
 .gradient-button a:hover {
