@@ -20,7 +20,7 @@ export class EditComponent implements OnInit {
     name: new FormControl("", [Validators.required]),
     email: new FormControl("", [Validators.required]),
     mobile: new FormControl("", [Validators.required]),
-    role: new FormControl(0, [Validators.required]),
+    role: new FormControl("", [Validators.required]),
     createdDate: new FormControl("", [Validators.required]),
   });
 

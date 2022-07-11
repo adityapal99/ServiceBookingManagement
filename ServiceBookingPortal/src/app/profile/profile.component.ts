@@ -57,12 +57,6 @@ export class ProfileComponent implements OnInit {
     return this.form.controls;
   }
 
-  submit(){
-    console.log(this.form.value);
-    this.profileService.update(this.userId, this.form.value).subscribe(res => {
-         this.router.navigate(['profile']);
-         this.toastr.success('Profile updated successfully!');
-    })
-  }
+
 
 }
