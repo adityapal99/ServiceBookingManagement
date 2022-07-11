@@ -1,34 +1,73 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Service Booking Management</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/product">Product</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/request">Service Booking</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/report">Service Booking Report</a>
-        </li>
-        <li class="nav-item" *ngIf="isAdminUser()">
-          <a class="nav-link" href="#" routerLink="/users">Users</a>
-        </li>
-      </ul>
-      <div class="d-flex" role="search">
-        <button class="btn btn-outline-danger" type="button" (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
-        <button class="btn btn-outline-success" type="button" (click)="login()" *ngIf="!isLoggedIn()">Login</button>
+<!-- ***** Preloader Start ***** -->
+<!-- <div id="js-preloader" class="js-preloader">
+  <div class="preloader-inner">
+    <span class="dot"></span>
+    <div class="dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div> -->
+<!-- ***** Preloader End ***** -->
+
+<!-- ***** Header Area Start ***** -->
+<header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="main-nav">
+          <!-- ***** Logo Start ***** -->
+          <a href="index.html" class="logo">
+            <h3>Service Booking Portal</h3>
+          </a>
+          <!-- ***** Logo End ***** -->
+          <!-- ***** Menu Start ***** -->
+          <ul class="nav">
+            <li class="scroll-to-section"><a routerLink="/" class="active">Home</a></li>
+            <li class="scroll-to-section"><a routerLink="/users">Users</a></li>
+            <li class="scroll-to-section"><a routerLink="/product">Products</a></li>
+            <li>
+              <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Services
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" routerLink="/request">Request</a></li>
+                <li><a class="dropdown-item" routerLink="/report">Report</a></li>
+              </ul>
+            </li>
+
+            <!-- <li *ngIf="isLoggedIn()" class="scroll-to-section"><a routerLink="/users">Users</a></li>
+            <li *ngIf="isLoggedIn()" class="scroll-to-section"><a routerLink="/product">Products</a></li>
+            <li *ngIf="isLoggedIn()">
+              <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Services
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" routerLink="/request">Request</a></li>
+                <li><a class="dropdown-item" routerLink="/report">Report</a></li>
+              </ul>
+            </li> -->
 
 
-        <a href="" routerLink="/profile" class="ms-2"><button class="btn btn-success" type="button" *ngIf="isLoggedIn()">Profile</button></a>
-
+            <li class="scroll-to-section"><a routerLink="">AboutUs</a></li>
+            <li *ngIf="!isLoggedIn()">
+              <div class="gradient-button"><a id="modal_trigger" routerLink="/auth/login"><i class="fa fa-sign-in-alt"></i> Sign In
+                  Now</a></div>
+            </li>
+            <li *ngIf="isLoggedIn()">
+              <div class="gradient-button"><a id="modal_trigger" routerLink="/auth/login"><i class="fa fa-sign-in-alt"></i> Sign Out</a>
+              </div>
+            </li>
+          </ul>
+          <a class='menu-trigger'>
+            <span>Menu</span>
+          </a>
+          <!-- ***** Menu End ***** -->
+        </nav>
       </div>
     </div>
   </div>
-</nav>
+</header>
 
 <router-outlet></router-outlet>
