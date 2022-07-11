@@ -172,6 +172,14 @@ namespace ProductMicroserviceTest
             //var returedProduct = result.Value as Product;
             //Assert.That(product.Id, Is.EqualTo(returedProduct.Id));
             //Assert.That(returedProduct, Is.EqualTo(product));
+
+            var response = await _controller.DeleteProduct(product.Id);
+            Assert.IsInstanceOf<OkObjectResult>(response.Result);
+            var result = response.Result as OkObjectResult;
+            var responseObj = result.Value as ResponseObj;
+            var returedProduct = responseObj.payload as Product;
+            Assert.That(product.Id, Is.EqualTo(returedProduct.Id));
+            Assert.That(returedProduct, Is.EqualTo(product));
         }
 
         [Test]
@@ -183,6 +191,9 @@ namespace ProductMicroserviceTest
 
             //var response = await _controller.DeleteProduct(id);
             //Assert.IsInstanceOf<NotFoundResult>(response.Result);
+
+            var response = await _controller.DeleteProduct(id);
+            Assert.IsInstanceOf<NotFoundResult>(response.Result);
         }
     }
 }
