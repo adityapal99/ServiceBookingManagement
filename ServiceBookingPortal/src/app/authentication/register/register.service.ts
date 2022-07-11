@@ -10,7 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterService {
   apiUrl = environment.ConnectedServices.User;
-  constructor(private http:HttpClient, private toastr: ToastrService){}
+
+  constructor(private http:HttpClient, private toastr: ToastrService) { }
+
   addUser(data: user)
   {
     return this.http.post(this.apiUrl + "user/", data).pipe(
