@@ -20,8 +20,12 @@
         </li>
       </ul>
       <div class="d-flex" role="search">
-        <button class="btn btn-outline-success" type="button" (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
+        <button class="btn btn-outline-danger" type="button" (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
         <button class="btn btn-outline-success" type="button" (click)="login()" *ngIf="!isLoggedIn()">Login</button>
+
+
+        <a href="" routerLink="/profile" class="ms-2"><button class="btn btn-success" type="button" *ngIf="isLoggedIn()">Profile</button></a>
+
       </div>
     </div>
   </div>

@@ -83,4 +83,8 @@ export class AuthService {
     return moment(expiresAt);
   }
 
+  getUserId() {
+    return parseInt(localStorage.getItem("id") ?? "0");
+  }
+
 }

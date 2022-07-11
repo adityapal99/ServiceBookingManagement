@@ -3,5 +3,4 @@ export interface user {
   email: string,
   password: string,
   mobile: number,
-  registrationDate:Date
 }

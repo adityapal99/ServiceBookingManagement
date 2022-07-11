@@ -1,9 +1,12 @@
 <div class="container">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form [formGroup]="form" (ngSubmit)="submit()">
+      <form [formGroup]="form">
         <div class="modal-header">
-          <h4 class="modal-title">Edit Profile</h4>
+          <h4 class="modal-title">Profile</h4>
+          <span class="right">
+            <a routerLink="/users/edit/{{userId}}"><button class="btn btn-success">Edit</button></a>
+          </span>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -92,17 +95,7 @@
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <a href="#" routerLink="/product/index" class="btn btn-primary"
-            >Back</a
-          >
-          <input
-            type="submit"
-            class="btn btn-success"
-            [disabled]="!form.valid"
-            value="Update"
-          />
-        </div>
+
       </form>
     </div>
   </div>

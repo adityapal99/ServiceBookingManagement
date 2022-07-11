@@ -12,16 +12,21 @@ import { ProductModule } from './product/product.module';
 import { UsersModule } from './users/users.module';
 import { BookingModule } from './booking/booking.module';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { ProfileComponent } from './profile/profile.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     ToastrModule.forRoot(),
     AuthenticationModule,
     ProductModule,
