@@ -16,7 +16,7 @@ export class RegisterService {
   addUser(data: user)
   {
     return this.http.post(this.apiUrl + "user/", data).pipe(
-      catchError(this.errorHandler)
+      catchError(this.errorHandler.bind(this))
     )
   }
 
