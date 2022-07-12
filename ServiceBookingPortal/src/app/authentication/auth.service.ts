@@ -29,10 +29,6 @@ export class AuthService {
       ));
   }
 
-  Register() {
-
-  }
-
   private setSession(authResult: ResponseObject) {
       const jwtData: JwtDecoded = this.getDecodedAccessToken(authResult.payload.accessToken);
 
