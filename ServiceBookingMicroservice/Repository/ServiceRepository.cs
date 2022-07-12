@@ -1,8 +1,9 @@
-﻿using ServiceBooking.DatabaseContext;
+using ServiceBooking.DatabaseContext;
 using ServiceBooking.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ServiceBooking.Repository
 {
@@ -13,21 +14,21 @@ namespace ServiceBooking.Repository
         {
             _context = context;
         }
-        public ServiceReport AddReport(ServiceReport serviceReport)
+        public async Task<ServiceReport> AddReport(ServiceReport serviceReport)
         {
             _context.Reports.Add(serviceReport);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return serviceReport;
         }
 
-        public ServiceRequest AddRequest(ServiceRequest serviceRequest)
+        public async Task<ServiceRequest> AddRequest(ServiceRequest serviceRequest)
         {
             _context.Requests.Add(serviceRequest);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return serviceRequest;
         }
 
-        public ServiceReport DeleteReport(int id)
+        public async Task<ServiceReport> DeleteReport(int id)
         {
             ServiceReport serviceReport = _context.Reports.Find(id);
             if (serviceReport == null)
@@ -35,34 +36,34 @@ namespace ServiceBooking.Repository
                 return null;
             }
             _context.Reports.Remove(serviceReport);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return serviceReport;
 
         }
 
-        public ServiceRequest DeleteRequest(int id)
+        public async Task<ServiceRequest> DeleteRequest(int id)
         {
             ServiceRequest serviceRequest = _context.Requests.Find(id);
-            if(serviceRequest == null)
+            if (serviceRequest == null)
             {
                 return null;
             }
             _context.Requests.Remove(serviceRequest);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return serviceRequest;
-        }
+         }
 
-        public ServiceReport GetReportById(int id)
+        public async Task<ServiceReport> GetReportById(int id)
         {
-            return _context.Reports.Find(id);
+            return await _context.Reports.FindAsync(id);
         }
 
-        public IEnumerable<ServiceReport> GetReports()
+        public async Task<IEnumerable<ServiceReport>> GetReports()
         {
-            return _context.Reports;
+            return await _context.Reports.ToListAsync();
         }
 
-        public IEnumerable<ServiceReport> GetReportsByUserId(int id)
+        public async Task<IEnumerable<ServiceReport>> GetReportsByUserId(int id)
         {
             List<int> requestIds = _context.Requests.Where(x => x.Userid == id).Select(x => x.Id).ToList();
             IEnumerable<ServiceReport> reports = _context.Reports
@@ -70,28 +71,28 @@ namespace ServiceBooking.Repository
             return reports;
         }
 
-        public ServiceRequest GetRequestById(int id)
+        public async Task<ServiceRequest> GetRequestById(int id)
         {
-            return _context.Requests.Find(id);
+            return await _context.Requests.FindAsync(id);
         }
 
-        public IEnumerable<ServiceRequest> GetRequests()
+        public async Task<IEnumerable<ServiceRequest>> GetRequests()
         {
-            return _context.Requests;
+            return await _context.Requests.ToListAsync();
         }
 
-        public ServiceReport UpdateReport(int id, ServiceReport serviceReport)
+        public async Task<ServiceReport> UpdateReport(int id, ServiceReport serviceReport)
         {
             _context.Entry(serviceReport).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return serviceReport;
             
         }
 
-        public ServiceRequest UpdateRequest(int id, ServiceRequest serviceRequest)
+        public async Task<ServiceRequest> UpdateRequest(int id, ServiceRequest serviceRequest)
         {
             _context.Entry(serviceRequest).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return serviceRequest;
         }
     }

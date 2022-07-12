@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ServiceBooking.Models;
 using ServiceBooking.Repository;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace ServiceBooking.Controllers
 {
@@ -19,14 +19,13 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public ActionResult<IEnumerable<ServiceRequest>> GetRequests()
+        public async Task<ActionResult<IEnumerable<ServiceRequest>>> GetRequests()
         {
             try
             {
                 _log4net.Info("GetRequests Method Called");
-                IEnumerable<ServiceRequest> requests = _repository.GetRequests();
-                return Ok(new { status = StatusCodes.Status200OK, msg = "All Requests", payload = requests });
+                IEnumerable<ServiceRequest> requests =await _repository.GetRequests();
+                return Ok(new ResponseObj{ status = StatusCodes.Status200OK, msg = "All Requests", payload = requests });
             }
             catch
             {
@@ -36,14 +35,13 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet("report")]
-        [Authorize]
-        public ActionResult<IEnumerable<ServiceReport>> GetReports()
+        public async Task<ActionResult<IEnumerable<ServiceReport>>> GetReports()
         {
             try
             {
                 _log4net.Info("GetReports Method Called");
-                IEnumerable<ServiceReport> reports = _repository.GetReports();
-                return Ok(new { status = StatusCodes.Status200OK, msg = "All Reports", payload = reports });
+                IEnumerable<ServiceReport> reports =await _repository.GetReports();
+                return Ok(new ResponseObj { status = StatusCodes.Status200OK, msg = "All Reports", payload = reports });
             }
             catch
             {
@@ -53,18 +51,17 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
-        public ActionResult<ServiceRequest> GetRequestById(int id)
+        public async Task<ActionResult<ServiceRequest>> GetRequestById(int id)
         {
             try
             {
                 _log4net.Info("GetRequestById Method Called");
-                ServiceRequest request = _repository.GetRequestById(id);
+                ServiceRequest request =await _repository.GetRequestById(id);
                 if (request == null)
                 {
                     return NotFound();
                 }
-                return Ok(new { status = StatusCodes.Status200OK, msg = "Request Found", payload = request });
+                return Ok(new ResponseObj { status = StatusCodes.Status200OK, msg = "Request Found", payload = request });
             }
             catch
             {
@@ -73,18 +70,17 @@ namespace ServiceBooking.Controllers
             }
         }
         [HttpGet("report/{id}")]
-        [Authorize]
-        public ActionResult<ServiceReport> GetReporttById(int id)
+        public async Task<ActionResult<ServiceReport>> GetReporttById(int id)
         {
             try
             {
                 _log4net.Info("GetReporttById Method Called");
-                ServiceReport report = _repository.GetReportById(id);
+                ServiceReport report =await _repository.GetReportById(id);
                 if (report == null)
                 {
                     return NotFound();
                 }
-                return Ok(new { status = StatusCodes.Status200OK, msg = "Report Found", payload = report });
+                return Ok(new ResponseObj{ status = StatusCodes.Status200OK, msg = "Report Found", payload = report });
             }
             catch
             {
@@ -93,8 +89,7 @@ namespace ServiceBooking.Controllers
             }
         }
         [HttpPost]
-        [Authorize]
-        public ActionResult<ServiceRequest> AddRequest(ServiceRequest serviceRequest)
+        public async Task<ActionResult<ServiceRequest>> AddRequest(ServiceRequest serviceRequest)
         {
             try
             {
@@ -103,8 +98,8 @@ namespace ServiceBooking.Controllers
                 {
                     return BadRequest();
                 }
-                _repository.AddRequest(serviceRequest);
-                return CreatedAtAction("AddRequest", new { status = StatusCodes.Status201Created, msg = "Request Added", payload = serviceRequest });
+               await _repository.AddRequest(serviceRequest);
+                return CreatedAtAction("AddRequest", new ResponseObj{ status = StatusCodes.Status201Created, msg = "Request Added", payload = serviceRequest });
             }
             catch
             {
@@ -114,8 +109,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpPost("report")]
-        [Authorize]
-        public ActionResult<ServiceReport> AddReport(ServiceReport serviceReport)
+        public async Task<ActionResult<ServiceReport>> AddReport(ServiceReport serviceReport)
         {
             try
             {
@@ -124,8 +118,8 @@ namespace ServiceBooking.Controllers
                 {
                     return BadRequest();
                 }
-                _repository.AddReport(serviceReport);
-                return CreatedAtAction("AddReport", new { status = StatusCodes.Status201Created, msg = "Request Added", payload = serviceReport }); ;
+                await _repository.AddReport(serviceReport);
+                return CreatedAtAction("AddReport", new ResponseObj{ status = StatusCodes.Status201Created, msg = "Request Added", payload = serviceReport }); ;
             }
             catch
             {
@@ -135,8 +129,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
-        public ActionResult<ServiceRequest> UpdateRequest(int id, ServiceRequest serviceRequest)
+        public async Task<ActionResult<ServiceRequest>> UpdateRequest(int id, ServiceRequest serviceRequest)
         {
             try
             {
@@ -145,8 +138,8 @@ namespace ServiceBooking.Controllers
                 {
                     return BadRequest();
                 }
-                serviceRequest = _repository.UpdateRequest(id, serviceRequest);
-                return CreatedAtAction("UpdateRequest", new { status = StatusCodes.Status202Accepted, msg = "Request Updated", payload = serviceRequest });
+                serviceRequest =await _repository.UpdateRequest(id, serviceRequest);
+                return Ok(new ResponseObj{ status = StatusCodes.Status202Accepted, msg = "Request Updated", payload = serviceRequest });
             }
             catch
             {
@@ -155,8 +148,7 @@ namespace ServiceBooking.Controllers
             }
         }
         [HttpPut("report/{id}")]
-        [Authorize]
-        public ActionResult<ServiceReport> UpdateReport(int id, ServiceReport serviceReport)
+        public async Task<ActionResult<ServiceReport>> UpdateReport(int id, ServiceReport serviceReport)
         {
             try
             {
@@ -165,8 +157,8 @@ namespace ServiceBooking.Controllers
                 {
                     return BadRequest();
                 }
-                serviceReport = _repository.UpdateReport(id, serviceReport);
-                return CreatedAtAction("UpdateReport", new { status = StatusCodes.Status202Accepted, msg = "Request Updated", payload = serviceReport });
+                serviceReport =await _repository.UpdateReport(id, serviceReport);
+                return Ok(new ResponseObj{ status = StatusCodes.Status202Accepted, msg = "Request Updated", payload = serviceReport });
             }
             catch
             {
@@ -176,18 +168,17 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
-        public ActionResult<ServiceRequest> DeleteRequest(int id)
+        public async Task<ActionResult<ServiceRequest>> DeleteRequest(int id)
         {
             try
             {
                 _log4net.Info("DeleteRequest Method Called");
-                ServiceRequest serviceRequest = _repository.DeleteRequest(id);
+                ServiceRequest serviceRequest =await _repository.DeleteRequest(id);
                 if (serviceRequest == null)
                 {
                     return NotFound();
                 }
-                return Ok(new { status = StatusCodes.Status204NoContent, msg = "Deleted Successfully", payload = serviceRequest });
+                return Ok(new ResponseObj{ status = StatusCodes.Status204NoContent, msg = "Deleted Successfully", payload = serviceRequest });
             }
             catch
             {
@@ -197,18 +188,17 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpDelete("report/{id}")]
-        [Authorize]
-        public ActionResult<ServiceReport> DeleteReport(int id)
+        public async Task<ActionResult<ServiceReport>> DeleteReport(int id)
         {
             try
             {
                 _log4net.Info("DeleteReport Method Called");
-                ServiceReport serviceReport = _repository.DeleteReport(id);
+                ServiceReport serviceReport =await _repository.DeleteReport(id);
                 if (serviceReport == null)
                 {
                     return NotFound();
                 }
-                return Ok(new { status = StatusCodes.Status204NoContent, msg = "Deleted Successfully", payload = serviceReport });
+                return Ok(new ResponseObj{ status = StatusCodes.Status204NoContent, msg = "Deleted Successfully", payload = serviceReport });
             }
             catch
             {
@@ -218,14 +208,13 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet("report/user/{id}")]
-        [Authorize]
-        public ActionResult<IEnumerable<ServiceReport>> GetReportsByUserId(int id)
+        public async Task<ActionResult<IEnumerable<ServiceReport>>> GetReportsByUserId(int id)
         {
             try
             {
                 _log4net.Info("GetReportsByUserId Method Called");
-                var reports = _repository.GetReportsByUserId(id);
-                return Ok(new { status = StatusCodes.Status200OK, msg = "All Reports", payload = reports });
+                var reports =await _repository.GetReportsByUserId(id);
+                return Ok(new ResponseObj{ status = StatusCodes.Status200OK, msg = "All Reports", payload = reports });
             }
             catch
             {
