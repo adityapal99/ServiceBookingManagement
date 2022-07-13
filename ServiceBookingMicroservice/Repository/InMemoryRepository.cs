@@ -1,4 +1,4 @@
-﻿using ServiceBooking.Models;
+using ServiceBooking.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +69,8 @@ namespace ServiceBooking.Repository
 
         public async Task<IEnumerable<ServiceReport>> GetReportsByUserId(int id)
         {
-            var requestId = Requests.Find(x => x.Userid == id).Id;
-            IEnumerable<ServiceReport> reports = Reports.FindAll(x => x.ServiceRequestId == requestId).ToList();
+            var requestId = Requests.FindAll(x => x.Userid == id).Select(x=>x.Id);
+            IEnumerable<ServiceReport> reports = Reports.FindAll(x=>requestId.Contains(x.Id)).ToList();
             return await Task.FromResult(reports);
         }
 
