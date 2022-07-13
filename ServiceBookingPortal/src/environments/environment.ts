@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   ConnectedServices: {
-    Authorization: "https://localhost:44771/",
-    Product: "https://localhost:44772/",
+    Authorization: "https://authorizationmicroservice20220713175548.azurewebsites.net/",
+    Product: "https://productmicroservice20220713172150.azurewebsites.net/",
     ServiceBooking: "https://localhost:44773/",
-    User: "https://localhost:44774/"
+    User: "https://usermicroservice20220713180703.azurewebsites.net/"
   }
 };
 
@@ -20,3 +20,7 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+// Product: https://productmicroservice20220713172150.azurewebsites.net
+// Authorization: https://authorizationmicroservice20220713175548.azurewebsites.net
+// User: https://usermicroservice20220713180703.azurewebsites.net
