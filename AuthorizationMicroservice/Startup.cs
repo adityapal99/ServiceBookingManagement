@@ -33,6 +33,11 @@ namespace AuthorizationMicroservice
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthorizationMicroservice", Version = "v1" });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AngularPolicy", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +53,8 @@ namespace AuthorizationMicroservice
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AngularPolicy");
 
             app.UseAuthorization();
 
