@@ -19,6 +19,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ServiceRequest>>> GetRequests()
         {
             try
@@ -35,6 +36,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet("report")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ServiceReport>>> GetReports()
         {
             try
@@ -51,6 +53,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<ServiceRequest>> GetRequestById(int id)
         {
             try
@@ -70,6 +73,7 @@ namespace ServiceBooking.Controllers
             }
         }
         [HttpGet("report/{id}")]
+        [Authorize]
         public async Task<ActionResult<ServiceReport>> GetReporttById(int id)
         {
             try
@@ -89,6 +93,7 @@ namespace ServiceBooking.Controllers
             }
         }
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ServiceRequest>> AddRequest(ServiceRequest serviceRequest)
         {
             try
@@ -109,6 +114,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpPost("report")]
+        [Authorize]
         public async Task<ActionResult<ServiceReport>> AddReport(ServiceReport serviceReport)
         {
             try
@@ -129,6 +135,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult<ServiceRequest>> UpdateRequest(int id, ServiceRequest serviceRequest)
         {
             try
@@ -148,6 +155,7 @@ namespace ServiceBooking.Controllers
             }
         }
         [HttpPut("report/{id}")]
+        [Authorize]
         public async Task<ActionResult<ServiceReport>> UpdateReport(int id, ServiceReport serviceReport)
         {
             try
@@ -168,6 +176,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<ServiceRequest>> DeleteRequest(int id)
         {
             try
@@ -188,6 +197,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpDelete("report/{id}")]
+        [Authorize]
         public async Task<ActionResult<ServiceReport>> DeleteReport(int id)
         {
             try
@@ -208,6 +218,7 @@ namespace ServiceBooking.Controllers
         }
 
         [HttpGet("report/user/{id}")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ServiceReport>>> GetReportsByUserId(int id)
         {
             try
