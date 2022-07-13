@@ -8,8 +8,9 @@ namespace ServiceBooking.Repository
 {
     public class InMemoryRepository : IServiceRepository
     {
-        int id = 5;
-        public List<ServiceReport> Reports = new List<ServiceReport>
+        static int reqId = 5; // Last ID of Request
+        static int repId = 5; // Last ID of Report
+        public static List<ServiceReport> Reports = new List<ServiceReport>
         {
             new ServiceReport() {Id=1,ServiceType="general", ActionTaken="Make1", DiagnosisDetails="Medel1",isPaid="Yes", VisitFees=1000,RepairDetails="", ReportDate = System.DateTime.Now,ServiceRequestId=1},
             new ServiceReport() {Id=2,ServiceType="repair", ActionTaken="Make2", DiagnosisDetails="Medel2",isPaid="Yes", VisitFees=2000,RepairDetails="", ReportDate = System.DateTime.Now,ServiceRequestId=2},
@@ -17,7 +18,7 @@ namespace ServiceBooking.Repository
             new ServiceReport() {Id=4,ServiceType="general", ActionTaken="Make4", DiagnosisDetails="Medel4",isPaid="Yes", VisitFees=4000,RepairDetails="", ReportDate = System.DateTime.Now,ServiceRequestId=4},
         };
 
-        public List<ServiceRequest> Requests = new List<ServiceRequest>
+        public static List<ServiceRequest> Requests = new List<ServiceRequest>
         {
             new ServiceRequest() { Id = 1,Productid=1,Userid=1, Problem = "A", Description = "aaa", Status = "aaa",RequestDate = DateTime.Now},
             new ServiceRequest() { Id = 2,Productid=2,Userid=2, Problem = "B", Description = "bbb", Status = "bbb",RequestDate = DateTime.Now},
@@ -27,16 +28,16 @@ namespace ServiceBooking.Repository
 
         public async Task<ServiceReport> AddReport(ServiceReport serviceReport)
         {
-            serviceReport.Id = id;
-            id++;
+            serviceReport.Id = repId;
+            repId++;
             Reports.Add(serviceReport);
             return await Task.FromResult(serviceReport);
         }
 
         public async Task<ServiceRequest> AddRequest(ServiceRequest serviceRequest)
         {
-            serviceRequest.Id = id;
-            id++;
+            serviceRequest.Id = reqId;
+            reqId++;
             Requests.Add(serviceRequest);
             return await Task.FromResult(serviceRequest);
         }
