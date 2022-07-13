@@ -35,7 +35,8 @@ namespace ServiceBookingMicroservice
         {
             services.AddControllers();
 
-            services.AddScoped<IServiceRepository, ServiceRepository>();
+            //services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IServiceRepository, InMemoryRepository>();
 
             // services.AddDbContext<ServiceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("my")));
             services.AddDbContext<ServiceContext>(options => options.UseInMemoryDatabase(Configuration.GetConnectionString("inMemory")));
