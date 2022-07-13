@@ -33,8 +33,8 @@ namespace ProductMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddSingleton<IProductRepository, InMemoryRepository>();
+            //services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddSingleton<IProductRepository, InMemoryRepository>();
             services.AddDbContext<ProductContext>
                 (options => options.UseSqlServer(Configuration.GetConnectionString("Database")));
 
