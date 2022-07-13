@@ -52,3 +52,7 @@ body{
     margin: 20px;
   }
 }
+
+.left-content {
+  transform: translateY(-50%);
+}

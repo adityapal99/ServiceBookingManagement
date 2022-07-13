@@ -14,7 +14,6 @@ import { BookingModule } from './booking/booking.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 @NgModule({
   declarations: [
     AppComponent,

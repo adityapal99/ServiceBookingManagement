@@ -91,11 +91,11 @@ namespace UserMicroservice
                 options.AddPolicy("AngularPolicy", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
-            services.AddDbContext<Database>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("Database"));
-                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            });
+            //services.AddDbContext<Database>(options =>
+            //{
+            //    options.UseSqlServer(Configuration.GetConnectionString("Database"));
+            //    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            //});
 
             services.AddDbContext<InMemoryDatabase>(options =>
             {

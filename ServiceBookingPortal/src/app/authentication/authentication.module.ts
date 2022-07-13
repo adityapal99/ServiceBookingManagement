@@ -7,12 +7,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { AuthInterceptor } from '../authentication.interceptor';
 import { RegisterComponent } from './register/register.component';
+import { SendOtpComponent } from './send-otp/send-otp.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SendOtpComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
