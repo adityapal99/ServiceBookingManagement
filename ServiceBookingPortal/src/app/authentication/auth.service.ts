@@ -16,7 +16,7 @@ export class AuthService {
 
   login(request: AuthorizationRequest) {
       const loginObserver =  this.http.post<ResponseObject>(environment.ConnectedServices.User + "user/login", {email: request.email, password: request.password}, {
-          headers: {
+        headers: {
               'Content-Type': 'application/json'
           }
       })
