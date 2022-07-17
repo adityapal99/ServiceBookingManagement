@@ -14,11 +14,13 @@ import { BookingModule } from './booking/booking.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AboutUsComponent } from './about-us/about-us.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProfileComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,
