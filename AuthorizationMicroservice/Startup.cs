@@ -28,7 +28,7 @@ namespace AuthorizationMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<AuthenticationService, AuthenticationService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthorizationMicroservice", Version = "v1" });

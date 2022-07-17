@@ -13,17 +13,17 @@ namespace AuthorizationMicroservice.Controllers
     [Route("api/auth")]
     public class AuthenticationController : ControllerBase
     {
-        public readonly IAuthenticationService _authService;
+        public readonly AuthenticationService _authService;
         /*public readonly ILogger _logger;*/
 
-        public AuthenticationController(IAuthenticationService _auth)
+        public AuthenticationController(AuthenticationService _auth)
         {
             _authService = _auth;
         }
 
 
         [HttpPost("login")]
-        public ActionResult<AuthTokenPayload> Login([FromBody] AppUser user)
+        public ActionResult Login([FromBody] AppUser user)
         {
             return Ok(_authService.GetAuthToken(user));
         }
