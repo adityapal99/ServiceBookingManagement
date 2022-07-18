@@ -3,28 +3,28 @@
     <div class="modal-dialog">
         <div class="modal-content">
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="modal-header">						
-            <h4 class="modal-title">Add Request</h4>
+        <div class="modal-header">
+            <h4 class="modal-title">Add Report</h4>
         </div>
         <div class="modal-body">
             <div class="form-group">
                 <label for="reportDate">Report Date:</label>
-                <input 
+                <input
                     formControlName="reportDate"
-                    id="reportDate" 
-                    type="date" 
+                    id="reportDate"
+                    type="date"
                     class="form-control">
                 <div *ngIf="f.reportDate.touched && f.reportDate.invalid" class="alert alert-danger">
                     <div *ngIf="f.reportDate.errors?.required">ReportDate is required.</div>
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <label for="serviceType">Service Type:</label>
-                <input 
+                <input
                     formControlName="serviceType"
-                    id="serviceType" 
-                    type="text" 
+                    id="serviceType"
+                    type="text"
                     class="form-control">
                 <div *ngIf="f.serviceType.touched && f.serviceType.invalid" class="alert alert-danger">
                     <div *ngIf="f.serviceType.errors?.required">service Type is required.</div>
@@ -33,10 +33,10 @@
 
             <div class="form-group">
                 <label for="actionTaken">Action Taken:</label>
-                <input 
+                <input
                     formControlName="actionTaken"
-                    id="actionTaken" 
-                    type="text" 
+                    id="actionTaken"
+                    type="text"
                     class="form-control">
                 <div *ngIf="f.actionTaken.touched && f.actionTaken.invalid" class="alert alert-danger">
                     <div *ngIf="f.actionTaken.errors?.required">Action Taken is required.</div>
@@ -44,10 +44,10 @@
             </div>
             <div class="form-group">
                 <label for="diagnosisDetails">Diagnosis Details:</label>
-                <input 
+                <input
                     formControlName="diagnosisDetails"
-                    id="diagnosisDetails" 
-                    type="text" 
+                    id="diagnosisDetails"
+                    type="text"
                     class="form-control">
                 <div *ngIf="f.diagnosisDetails.touched && f.diagnosisDetails.invalid" class="alert alert-danger">
                     <div *ngIf="f.diagnosisDetails.errors?.required">Diagnosis Details is required.</div>
@@ -56,10 +56,10 @@
 
             <div class="form-group">
                 <label for="isPaid">IsPaid:</label>
-                <input 
+                <input
                     formControlName="isPaid"
-                    id="isPaid" 
-                    type="text" 
+                    id="isPaid"
+                    type="text"
                     class="form-control">
                 <div *ngIf="f.isPaid.touched && f.isPaid.invalid" class="alert alert-danger">
                     <div *ngIf="f.isPaid.errors?.required">IsPaid is required.</div>
@@ -68,10 +68,10 @@
 
             <div class="form-group">
                 <label for="visitFees">visitFees:</label>
-                <input 
+                <input
                     formControlName="visitFees"
-                    id="visitFees" 
-                    type="number" 
+                    id="visitFees"
+                    type="number"
                     class="form-control">
 
                 <div *ngIf="f.visitFees.touched && f.visitFees.invalid" class="alert alert-danger">
@@ -80,10 +80,10 @@
             </div>
             <div class="form-group">
                 <label for="repairDetails">RepairDetails:</label>
-                <input 
+                <input
                     formControlName="repairDetails"
-                    id="repairDetails" 
-                    type="text" 
+                    id="repairDetails"
+                    type="text"
                     class="form-control">
 
                 <div *ngIf="f.repairDetails.touched && f.repairDetails.invalid" class="alert alert-danger">
@@ -92,10 +92,10 @@
             </div>
             <div class="form-group">
                 <label for="serviceRequestId">ServiceRequestId:</label>
-                <input 
+                <input
                     formControlName="serviceRequestId"
-                    id="serviceRequestId" 
-                    type="number" 
+                    id="serviceRequestId"
+                    type="number"
                     class="form-control">
 
                 <div *ngIf="f.serviceRequestId.touched && f.serviceRequestId.invalid" class="alert alert-danger">
