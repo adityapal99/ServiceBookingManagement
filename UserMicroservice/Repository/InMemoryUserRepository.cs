@@ -37,6 +37,7 @@ namespace UserMicroservice.Repository
 
             user.Id = id;
             id++;
+            user.RegistrationDate = System.DateTime.Now;
             Users.Add(user);
             return await Task.FromResult(user);
         }
@@ -70,7 +71,6 @@ namespace UserMicroservice.Repository
             Original.Name = user.Name;
             Original.Email = user.Email;
             Original.Password = user.Password;
-            Original.RegistrationDate = user.RegistrationDate;
             return await Task.FromResult(user);
         }
 
