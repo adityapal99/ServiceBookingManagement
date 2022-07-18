@@ -1,43 +1,43 @@
 <div class="container">
-  
+
     <div class="modal-dialog">
         <div class="modal-content">
-        
+
     <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="modal-header">						
+        <div class="modal-header">
             <h4 class="modal-title">Edit Product</h4>
         </div>
         <div class="modal-body">
 
         <div class="form-group">
-            <input 
+            <input
                 formControlName="id"
-                id="id" 
-                type="number" 
+                id="id"
+                type="number"
                 [(ngModel)]="product.id"
                 class="form-control" style="display:none">
         </div>
-        
-        
+
+
         <div class="form-group">
             <label for="name">Name:</label>
-            <input 
+            <input
                 formControlName="name"
-                id="name" 
-                type="text" 
+                id="name"
+                type="text"
                 [(ngModel)]="product.name"
                 class="form-control">
             <div *ngIf="f.name.touched && f.name.invalid" class="alert alert-danger">
                 <div *ngIf="f.name.errors?.required">Name is required.</div>
             </div>
         </div>
-         
+
         <div class="form-group">
             <label for="make">Make</label>
-            <input 
+            <input
                 formControlName="make"
-                id="make" 
-                type="text" 
+                id="make"
+                type="text"
                 [(ngModel)]="product.make"
                 class="form-control">
             <div *ngIf="f.make && f.make.invalid" class="alert alert-danger">
@@ -47,10 +47,10 @@
 
         <div class="form-group">
             <label for="model">Model</label>
-            <input 
+            <input
                 formControlName="model"
-                id="model" 
-                type="text" 
+                id="model"
+                type="text"
                 [(ngModel)]="product.model"
                 class="form-control">
             <div *ngIf="f.model.touched && f.model.invalid" class="alert alert-danger">
@@ -60,10 +60,10 @@
 
         <div class="form-group">
             <label for="cost">Cost</label>
-            <input 
+            <input
                 formControlName="cost"
-                id="cost" 
-                type="number" 
+                id="cost"
+                type="number"
                 [(ngModel)]="product.cost"
                 class="form-control">
             <div *ngIf="f.cost.touched && f.cost.invalid" class="alert alert-danger">
@@ -73,11 +73,18 @@
 
             <div class="form-group">
             <label for="createdDate">CreatedDate</label>
-            <input 
+            <!-- <input
                 formControlName="createdDate"
-                id="createdDate" 
-                type="date" 
+                id="createdDate"
+                type="date"
                 [(ngModel)]="product.createdDate"
+                class="form-control"> -->
+
+                <input
+                formControlName="createdDate"
+                id="createdDate"
+                type="date"
+                [ngModel]="product.createdDate | date:'yyyy-MM-dd'" (ngModelChange)="product.createdDate=$event"
                 class="form-control">
             <div *ngIf="f.createdDate.touched && f.createdDate.invalid" class="alert alert-danger">
                 <div *ngIf="f.createdDate.errors?.required">CreatedDate is required.</div>
