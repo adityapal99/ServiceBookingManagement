@@ -130,7 +130,7 @@ namespace ProductMicroserviceTest
         public async Task CheckPostProduct_ValidInputs()
         {
             Product product = new Product { Name = "A", Make = "aaa", Model = "aaa", Cost = 1000, CreatedDate = DateTime.Now };
-            Product productFinal = new Product { Id=1, Name = "A", Make = "aaa", Model = "aaa", Cost = 1000, CreatedDate = DateTime.Now };
+            Product productFinal = new Product { Id = 1, Name = "A", Make = "aaa", Model = "aaa", Cost = 1000, CreatedDate = DateTime.Now };
 
             _repository.Setup(x => x.CreateProduct(product)).ReturnsAsync(productFinal);
 
