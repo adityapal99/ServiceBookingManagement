@@ -39,7 +39,7 @@ namespace UserMicroservice.Repository
         {
             user.Id = id;
             id++;
-            bool isEmail = Regex.IsMatch(user.Email, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
+            bool isEmail = Regex.IsMatch(user.Email,@"^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$", RegexOptions.IgnoreCase);
             if (!isEmail) throw new InvalidEmailException();
 
             bool isPhone = Regex.IsMatch(user.Mobile, @"^[0-9]{10}$");
