@@ -26,6 +26,8 @@ namespace UserMicroservice.Repository
             new AppUser() {Id=4, Name="AppUser4", Email="Make4@gmail.com", Password="Medel4", Mobile="6000000000", Role = UserRole.ADMIN, RegistrationDate = System.DateTime.Now},
             new AppUser() {Id=5, Name="Ayush Raj Vaish", Email="ayush@gmail.com", Password="password123", Mobile="5000000000", Role = UserRole.USER, RegistrationDate = System.DateTime.Now},
             new AppUser() {Id=6, Name="Disha Khubani", Email="disha@gmail.com", Password="password123", Mobile="4000000000", Role = UserRole.ADMIN, RegistrationDate = System.DateTime.Now},
+            new AppUser() {Id=6, Name="Naman", Email="naman@gmail.com", Password="12345678", Mobile="4000000000", Role = UserRole.USER, RegistrationDate = System.DateTime.Now},
+
         };
 
 
