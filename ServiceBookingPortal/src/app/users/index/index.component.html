@@ -64,10 +64,10 @@
           <td>
             <a routerLink="/users/edit/{{ user.id }}" class="edit"
               ><span>Edit</span></a
-            >
-            <a routerLink="/users/details/{{ user.id }}" class="edit"
+            ><br>
+            <a routerLink="/users/details/{{ user.id }}" class="details"
               ><span>Details</span></a
-            >
+            ><br>
             <button
               type="button"
               (click)="deletePost(user.id)"

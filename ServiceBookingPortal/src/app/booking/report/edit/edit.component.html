@@ -19,18 +19,18 @@
         </div>
         
         
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="productid">Id:</label>
             <input 
                 formControlName="id"
                 id="id" 
                 type="number" 
-                [(ngModel)]="report.id"
+                [ngModel]="report.reportDate| date:'yyyy-MM-dd'" (ngModelChange)="report.reportDate=$event"
                 class="form-control">
             <div *ngIf="f.id.touched && f.id.invalid" class="alert alert-danger">
                 <div *ngIf="f.id.errors?.required">Reportid is required.</div>
             </div>
-        </div>
+        </div> -->
          
         <div class="form-group">
             <label for="reportDate">Report Date</label>
@@ -38,7 +38,7 @@
                 formControlName="reportDate"
                 id="reportDate" 
                 type="date" 
-                [(ngModel)]="report.reportDate"
+                [ngModel]="report.reportDate| date:'yyyy-MM-dd'" (ngModelChange)="report.reportDate=$event"
                 class="form-control">
             <div *ngIf="f.reportDate && f.reportDate.invalid" class="alert alert-danger">
                 <div *ngIf="f.reportDate.errors?.required">ReportDate is required.</div>
@@ -109,7 +109,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="repairDetails">repairDetails</label>
+            <label for="repairDetails">RepairDetails</label>
             <input 
                 formControlName="repairDetails"
                 id="repairDetails" 
@@ -121,7 +121,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="serviceRequestId">serviceRequestId</label>
+            <label for="serviceRequestId">ServiceRequestId</label>
             <input 
                 formControlName="serviceRequestId"
                 id="serviceRequestId" 

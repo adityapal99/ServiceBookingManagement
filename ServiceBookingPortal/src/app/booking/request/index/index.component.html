@@ -19,7 +19,7 @@
         <th>DESCRIPTION</th>
         <th>STATUS</th>
         <th>REQUESTDATE</th>
-        <th width="220px">Action</th>
+        <th width="220px">ACTION</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,8 +31,8 @@
                     <td>{{ request.status }}</td>
                     <td>{{ request.requestDate | date }}</td>
                     <td>
-                        <a href="#" routerLink="/request/edit/{{request.id}}" class="edit"><span>Edit</span></a>
-                        <a href="#" routerLink="/request/details/{{request.id}}" class="edit"><span>Details</span></a>
+                        <a href="#" routerLink="/request/edit/{{request.id}}" class="edit"><span>Edit</span></a><br>
+                        <a href="#" routerLink="/request/details/{{request.id}}" class="details"><span>Details</span></a><br>
                         <button type="button" (click)="deleteRequest(request.id)" class="btn btn-danger">Delete</button>
                         <!--<a href="#deleteEmployeeModal" class="delete"><i class="bi bi-trash"></i><span>Delete</span></a>-->
                     </td>
