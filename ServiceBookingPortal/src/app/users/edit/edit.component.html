@@ -80,6 +80,7 @@
               formControlName="createdDate"
               id="createdDate"
               type="date"
+              [ngModel]="user.registrationDate| date:'yyyy-MM-dd'" (ngModelChange)="user.registrationDate=$event"
               class="form-control"
             />
             <div

@@ -14,14 +14,14 @@
             <thead>
                 <tr>
         <th>ID</th>
-        <th>REPORTDATE</th>
-        <th>SERVICETYPE</th>
-        <th>ACTIONTAKEN</th>
-        <th>diagnosisDetails</th>
-        <th>isPaid</th>
-        <th>visitFees</th>
-        <th>repairDetai</th>
-        <th>serviceRequestId</th>
+        <th>Report Date</th>
+        <th>Service Type</th>
+        <th>Action Taken</th>
+        <th>Diagnosis Details</th>
+        <th>IsPaid</th>
+        <th>Visit Fees</th>
+        <th>Repair Details</th>
+        <th>Service RequestId</th>
         <th width="220px">Action</th>
                 </tr>
             </thead>
@@ -37,8 +37,8 @@
                     <td>{{ report.repairDetails}}</td>
                     <td>{{ report.serviceRequestId}}</td>
                     <td>
-                        <a href="#" routerLink="/report/edit/{{report.id}}" class="edit"><span>Edit</span></a>
-                        <a href="#" routerLink="/report/details/{{report.id}}" class="edit"><span>Details</span></a>
+                        <a href="#" routerLink="/report/edit/{{report.id}}" class="edit"><span>Edit</span></a><br>
+                        <a href="#" routerLink="/report/details/{{report.id}}" class="details"><span>Details</span></a><br>
                         <button type="button" (click)="deleteReport(report.id)" class="btn btn-danger">Delete</button>
                         <!--<a href="#deleteEmployeeModal" class="delete"><i class="bi bi-trash"></i><span>Delete</span></a>-->
                     </td>

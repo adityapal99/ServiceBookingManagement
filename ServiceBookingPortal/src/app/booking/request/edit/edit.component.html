@@ -90,7 +90,7 @@
                 formControlName="requestDate"
                 id="requestDate" 
                 type="date" 
-                [(ngModel)]="request.requestDate"
+                [ngModel]="request.requestDate| date:'yyyy-MM-dd'" (ngModelChange)="request.requestDate=$event"
                 class="form-control">
             <div *ngIf="f.requestDate.touched && f.requestDate.invalid" class="alert alert-danger">
                 <div *ngIf="f.requestDate.errors?.required">RequestDate is required.</div>
