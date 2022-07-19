@@ -1,0 +1,6 @@
+.image-wrap {
+  height: 12vw;
+  width: 12vw;
+  border-radius: 50%;
+  overflow: hidden;
+}
